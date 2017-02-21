@@ -1,15 +1,14 @@
 /* global CMGLOBALVAR */
 
-angular.module("DogModule").controller("HomeCtrl", function() {
-	
-});
+//angular.module("routerApp").controller("HomeCtrl", function() {
+//    
+//});
 
-angular.module("DogModule").controller("CharacterCtrl", function(GetCharacterService) {
-	var self = this;
-    var thumbnail;
+angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
+    var self = this;
 
-    self.getCharacter = function(server,character) {
-        var promise = GetCharacterService.sendCharacterRequest(server, character);
+    self.sendRequest = function(urlStub) {
+        var promise = ApiSearchService.sendApiRequest(urlStub);
 
         promise.then(function(response){
         //console.log("success");

@@ -1,0 +1,16 @@
+<div>
+  <div ng-controller="ApiCtrl as api">
+    <div class="container main-view">
+
+      <div class="row">
+        https://us.api.battle.net/wow/ 
+        <input type="text" placeholder="url-stub" data-ng-model="urlStub" ng-keyup="$event.keyCode == 13 ? api.sendRequest(urlStub) : null"/>
+      </div>
+
+      <div class="row">
+        <div data-ng-click="char.getCharacter(urlStub)" class="btn btn-success">Search!</div>
+      </div>
+
+    </div>
+  </div>
+</div>

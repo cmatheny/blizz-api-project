@@ -1,7 +1,17 @@
-container {
-    margin-top: 20px;
+.container.main {
     align-self: center;
+    width: 100%;
+    padding: 20px;
+    color: white;
+    background-color: black;
+    min-height: 100vh;
 }
+
+.container {
+    margin: 0;
+    width: 100%;
+}
+
 .row {
     margin: 20px;
 }
@@ -9,4 +19,20 @@ container {
 div.link {
     color: deepskyblue;
     cursor: pointer;
+}
+
+.navbar, .sidenav {
+    padding: 20px;
+    background-color: darkblue;
+}
+
+.navbar a, .sidenav a {
+    font-size: 16pt;
+    color: red;
+    background-color: black;
+    margin-right: 50px;
+}
+
+.sidenav {
+    float: right;
 }

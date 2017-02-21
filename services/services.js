@@ -1,6 +1,6 @@
 /* global CMGLOBALVAR */
 
-angular.module("DogModule").service("GetCharacterService", function($http) {
+angular.module("routerApp").service("GetCharacterService", function($http) {
 
     var self = this;
 
@@ -11,3 +11,16 @@ angular.module("DogModule").service("GetCharacterService", function($http) {
         });
     };
 });
+
+angular.module("routerApp").service("ApiSearchService", function($http) {
+
+    var self = this;
+
+    self.sendApiRequest = function(urlStub) {
+        return $http({
+            method:"GET",
+            url:"https://us.api.battle.net/wow/"+urlStub+"?locale=en_US&apikey="+CMGLOBALVAR.apiKey
+        });
+    };
+});
+

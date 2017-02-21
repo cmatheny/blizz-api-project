@@ -1,0 +1,12 @@
+container {
+    margin-top: 20px;
+    align-self: center;
+}
+.row {
+    margin: 20px;
+}
+
+div.link {
+    color: deepskyblue;
+    cursor: pointer;
+}

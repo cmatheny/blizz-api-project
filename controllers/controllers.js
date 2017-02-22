@@ -1,9 +1,3 @@
-/* global CMGLOBALVAR */
-
-//angular.module("routerApp").controller("HomeCtrl", function() {
-//    
-//});
-
 angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
     var self = this;
 

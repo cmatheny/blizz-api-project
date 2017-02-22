@@ -1,24 +1,24 @@
 <div>
-  <div ng-controller="CharacterMainCtrl as char">
-    <div class="container char-main-view">
+  <div class="container char-main-view">
 
-      <div class="row">
-        <input type="text" class="text-box" placeholder="Server" data-ng-model="char.serverInput" ng-keyup="$event.keyCode == 13 ? char.submitRequest(serverInput,nameInput) : null"/>
-        <input type="text" class="text-box" placeholder="Character Name" data-ng-model="char.nameInput" ng-keyup="$event.keyCode == 13 ? char.submitRequest(serverInput,nameInput) : null"/>
-      </div>
+    <div class="row">
+      <input type="text" class="text-box" placeholder="Server" data-ng-model="charMain.serverInput" ng-keyup="$event.keyCode == 13 ? charMain.submitRequest(serverInput,nameInput) : null"/>
+      <input type="text" class="text-box" placeholder="Character Name" data-ng-model="charMain.nameInput" ng-keyup="$event.keyCode == 13 ? charMain.submitRequest(serverInput,nameInput) : null"/>
+    </div>
 
-      <div class="row">
-        <div data-ng-click="char.submitRequest()" class="btn btn-success">Search!</div>
-      </div>
-      <div class="row">
-        <div data-ng-show='char.data'>
-          <div class="text-center">{{char.data.name}} - {{char.data.realm}}</div>
-          <br/>
-          <div class="text-center"><img alt="Avatar" class="avatar" data-ng-src="{{char.data.thumbnail}}"/></div>
-          <br/>
-          <div class="text-center">Level {{char.data.level}} {{char.data.charRace}} {{char.data.charClass}}</div>
-        </div>
+    <div class="row">
+      <div data-ng-click="charMain.submitRequest()" class="btn btn-success">Search!</div>
+    </div>
+    
+    <div class="row">
+      <div data-ng-show='charMain.data'>
+        <div class="text-center">{{charMain.data.name}} - {{charMain.data.realm}}</div>
+        <br/>
+        <div class="text-center"><img alt="Avatar" class="avatar" data-ng-src="{{charMain.data.thumbUrl}}"/></div>
+        <br/>
+        <div class="text-center">Level {{charMain.data.level}} {{charMain.data.charRace}} {{charMain.data.charClass}}</div>
       </div>
     </div>
+    
   </div>
 </div>

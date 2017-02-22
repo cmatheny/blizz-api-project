@@ -86,19 +86,55 @@ angular.module("routerApp").service("GetCharacterService", function($http,GetApi
         console.log(deferred.promise);
         return deferred.promise;
     };
+    
+    self.getThumbnailPromise = function() {
+        
+        var deferred = $q.defer();
+        var url="https://render-api-us.worldofwarcraft.com/static-render/us/" + self.charData.thumbnail;
+        
+        console.log('starting image check');
+        
+        function testImage() {
+            var tester = new Image();
+            tester.onload = imageFound;
+            tester.onerror = imageNotFound;
+            tester.src = url;
+            console.log('image object created');
+        }
 
+        function imageFound() {
+            console.log("image found");
+            self.charData.thumbUrl = url;
+            deferred.resolve(self.charData.thumbUrl);
+        }
+        
+        function imageNotFound() {
+            self.charData.thumbUrl = "resources/image-not-found.png";
+            console.log("image not found");
+            deferred.resolve(self.charData.thumbUrl);
+        }
+        
+        testImage();
+        return deferred.promise;
+    };
 
     self.sendCharacterRequest = function(server, character) {
-        return $http({
+        var deferred = $q.defer();
+        
+        $http({
             method:"GET",
             url:"https://us.api.battle.net/wow/character/" + server+"/" + character + "?locale=en_US&apikey="+GetApiKeyService.apiKeyCheck()
         }).then(function(response) {
             self.charData = response.data;
-            self.charData.thumbnail="http://render-api-us.worldofwarcraft.com/static-render/us/" + response.data.thumbnail;
             console.log(self.charData);
+            deferred.resolve(self.charData);
+            
         },function(){
             alert("Not Found");
+            deferred.resolve();
         });
+        
+        return deferred.promise;
     };
 });
 

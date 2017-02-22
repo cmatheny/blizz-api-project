@@ -13,12 +13,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	
 	$stateProvider.state('character',{
 		url: '/character',
-        templateUrl: 'views/character.html'
+        templateUrl: 'views/character.html',
+        controller: 'CharacterCtrl as char'
     });
     
     $stateProvider.state('character.main',{
         url:'/',
-        templateUrl: 'views/character/main.html'
+        templateUrl: 'views/character/main.html',
+        controller: 'CharacterMainCtrl as charMain'
     });
     
     $stateProvider.state('character.stats',{

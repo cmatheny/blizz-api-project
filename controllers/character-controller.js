@@ -22,41 +22,18 @@ angular.module("routerApp").controller("CharacterMainCtrl", function(GetCharacte
         });
     };
     
-//    self.getCharacterClass = function() {
-//        console.log(self.characterClasses);
-//        var classId = self.data.class;
-//        var begin = function() {
-//            if (this.characterClasses !== undefined) {
-//                updateClass();
-//            } else {
-//            var urlStub = "data/character/classes";
-//            var getFromApi = ApiSearchService.sendApiRequest(urlStub);
-//            self.characterClasses = [undefined];
-//
-//            getFromApi.then(function(response) {
-//                console.log(response);
-//                for (var index in response.data.classes) {
-//                    self.characterClasses.push(response.data.classes[index].name);
-//                }
-//                updateClass();
-//            });
-//            }
-//        };
-//
-//        var updateClass = function() {
-//            console.log(self.characterClasses);
-//            self.data.charClass=self.characterClasses[classId];
-//            console.log(self.data.charClass);
-//        };
-//
-//        begin();
-//    };
+    self.getThumbnail = function(){
+        GetCharacterService.getThumbnailPromise().then(function(thumbUrl){
+            self.data.thumbUrl = thumbUrl;
+        });
+    };
 
     self.submitRequest = function() {
         var promise = GetCharacterService.sendCharacterRequest(self.serverInput, self.nameInput);
 
         promise.then(function() {
             self.getCharacter();
+            self.getThumbnail();
             self.getCharacterClass();
             self.getCharacterRace();
         });

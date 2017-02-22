@@ -6,6 +6,16 @@ var app = angular.module("routerApp", ['ui.router']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 	
+    $stateProvider.state('page',{
+        url:'/',
+        templateUrl: 'page.html'
+    });
+    
+    $stateProvider.state('page.main',{
+		url: '/index.html',
+		templateUrl: 'views/home.html'
+	});
+    
     $stateProvider.state('home',{
 		url: '/index.html',
 		templateUrl: 'views/home.html'
@@ -14,7 +24,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('character',{
 		url: '/character',
         templateUrl: 'views/character.html',
-        controller: 'CharacterCtrl as char'
+        controller: 'CharacterCtrl as char',
+//        views: {
+//            
+//        }
     });
     
     $stateProvider.state('character.main',{

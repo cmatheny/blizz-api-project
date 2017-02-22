@@ -26,11 +26,15 @@
   <body>
 
     <div class="container main">
+      <div class="row navbar-header title-bar">
+        WoW Character Viewer
+      </div>
       <div class="row navbar-header">
-        <a class="link btn" data-ui-sref="home">Home</a>
-        <a class="link btn" data-ui-sref="character.main">Character Search</a>
-        <a class="link btn" data-ui-sref="api">Api Search</a>
-        <a class="link btn" data-ui-sref="resetKey">Reset API Key</a>
+        <a class="link btn col-xs-2" data-ui-sref="home">Home</a>
+        <a class="link btn col-xs-2" data-ui-sref="character.main">Character</a>
+        <a class="link btn col-xs-2" data-ui-sref="api">Api Search</a>
+        <a class="link btn col-xs-2" data-ui-sref="resetKey">Reset API Key</a>
+        <a class="link btn col-xs-2">Something Else</a>
       </div>
       
       <div class="row full-page">
@@ -39,12 +43,18 @@
 
     </div>
 
-
+    
     <script src="scripts/app.js"></script>
-    <script src="controllers/controllers.js"></script>
+    
+    <!-- Controllers -->
+    <script src="controllers/simple-controllers.js"></script>
+    <script src="controllers/character-main.js" type="text/javascript"></script>
+    <script src="controllers/character-stats.js" type="text/javascript"></script>
+    
+    <!-- Services -->
     <script src="services/services.js"></script>
-    <script src="controllers/character-controller.js"></script>
-
+    <script src="services/character-services.js" type="text/javascript"></script>
+    
   </body>
   
 </html>

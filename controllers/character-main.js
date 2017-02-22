@@ -1,9 +1,3 @@
-/* global CMGLOBALVAR */
-
-angular.module("routerApp").controller("CharacterCtrl", function() {
-    var self = this;
-});
-
 angular.module("routerApp").controller("CharacterMainCtrl", function(GetCharacterService) {
     var self = this;
     self.serverInput="emerald-dream";

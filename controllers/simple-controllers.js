@@ -1,3 +1,7 @@
+angular.module("routerApp").controller("CharacterCtrl", function() {
+    var self = this;
+});
+
 angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
     var self = this;
 

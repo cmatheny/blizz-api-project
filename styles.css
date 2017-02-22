@@ -33,13 +33,16 @@ li {
     border-radius: 12px;
 }
 
-.navbar-header a, .sidenav a {
+a.link {
     font-size: 16pt;
+    font-weight: bold;
     color: red;
     background-color: black;
+    padding:10px;
+    margin:10px;
 }
-.navbar-header a:hover, .navbar-header a:focus,
-.sidenav a:hover, .sidenav a:focus {
+
+a.link:hover, a.link:focus {
 background-color: #eee;
 }
 
@@ -47,14 +50,12 @@ background-color: #eee;
     width: 100%;
 }
 
-.navbar-header a {
-    margin-right: 50px;    
+.sidenav {
+    min-width: 20%;
 }
 
-
-.sidenav {
-    align-items: stretch;
-    height: 80vh;
+.title-bar {
+    font-size: 24pt;
 }
 
 input.text-box {

@@ -27,3 +27,8 @@ angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
     };
         
 });
+
+angular.module("routerApp").controller("SidenavCtrl", function(ApiSearchService) {
+    var self = this;
+    this.items = ['1','2','3'];
+});

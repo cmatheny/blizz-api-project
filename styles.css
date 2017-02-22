@@ -1,10 +1,15 @@
+html,body {
+    background-color: black;
+}
+
 .container.main {
     align-self: center;
     width: 100%;
     padding: 20px;
     color: white;
-    background-color: black;
+    font-size: 14pt;
     min-height: 100vh;
+    height: 100%;
 }
 
 .container {
@@ -16,7 +21,7 @@
     margin: 20px;
 }
 
-div.link {
+a.link {
     color: deepskyblue;
     cursor: pointer;
 }
@@ -33,6 +38,19 @@ div.link {
     margin-right: 50px;
 }
 
+.full-page {
+    height: 100%;
+}
+
 .sidenav {
-    float: right;
+    align-items: stretch;
+    height: 100%;
+}
+
+input {
+    color:black;
+}
+
+.avatar {
+    width: 200px;
 }

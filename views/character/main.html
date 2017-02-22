@@ -12,9 +12,11 @@
       </div>
       <div class="row">
         <div data-ng-show='char.data'>
-          <div>{{char.data.name}}</div>
-          <img alt="Avatar" data-ng-src="{{char.thumbnail}}"/>
-          <div>{{char.data.charClass}}</div>
+          <div class="text-center">{{char.data.name}} - {{char.data.realm}}</div>
+          <br/>
+          <div class="text-center"><img alt="Avatar" class="avatar" data-ng-src="{{char.thumbnail}}"/></div>
+          <br/>
+          <div class="text-center">Level {{char.data.level}} {{char.data.charClass}}</div>
         </div>
       </div>
     </div>

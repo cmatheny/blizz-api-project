@@ -1,13 +1,10 @@
 <div>
-  <div class="container main-view" ng-controller="CharacterCtrl as char">
 
-    <div ui-view class="col-xs-10"></div>
-    
-    <div class="col-xs-2 sidenav">
-      <a class="row link" data-ui-sref=".main">Main</a>
-      <a class="row link" data-ui-sref=".main">Main2</a>
-      <a class="row link" data-ui-sref=".stats">Stats</a>
-    </div>
+  <div class="col-xs-10" data-ui-view></div>
 
+  <div class="col-xs-2 sidenav">
+    <a class="row link" data-ui-sref=".main">Main</a>
+    <a class="row link" data-ui-sref=".stats">Stats</a>
   </div>
+    
 </div>

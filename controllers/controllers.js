@@ -28,7 +28,7 @@ angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
         
 });
 
-angular.module("routerApp").controller("SidenavCtrl", function(ApiSearchService) {
+angular.module("routerApp").controller("ResetKeyCtrl", function(ClearApiKeyService) {
     var self = this;
-    this.items = ['1','2','3'];
+    self.resetKey = ClearApiKeyService.clearApiKey;
 });

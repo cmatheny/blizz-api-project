@@ -3,22 +3,34 @@
   
   <head>
     <meta charset="UTF-8">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/blizz-api-project/styles.css">
+    
     <title>API Stuff</title>
     <link rel="icon" type="image/png" sizes="96x96" href="./resources/favicon.jpg">
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    
+    <!-- custom style-sheet(s) -->
+    <link rel="stylesheet" type="text/css" href="/blizz-api-project/styles.css">
+    
+    <!-- development full/local styles/scripts -->
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <script src="node_modules/angular/angular.js" type="text/javascript"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" type="text/javascript"></script>
+    
+    <!-- deployment min/cdn scripts -->
+<!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
     <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>-->
   </head>
   
   <body>
 
     <div class="container main">
-      <div class="row navbar">
-        <a class="link" data-ui-sref="home">Home</a>
-        <a class="link" data-ui-sref="character.main">Character Search</a>
-        <a class="link" data-ui-sref="api">Api Search</a>
-        <a class="link" data-ui-sref="resetKey">Reset API Key</a>
+      <div class="row navbar-header">
+        <a class="link btn" data-ui-sref="home">Home</a>
+        <a class="link btn" data-ui-sref="character.main">Character Search</a>
+        <a class="link btn" data-ui-sref="api">Api Search</a>
+        <a class="link btn" data-ui-sref="resetKey">Reset API Key</a>
       </div>
       
       <div class="row full-page">

@@ -1,15 +1,16 @@
-html,body {
-    background-color: black;
-}
-
 .container.main {
     align-self: center;
     width: 100%;
-    padding: 10px;
     color: white;
     font-size: 14pt;
     min-height: 100vh;
     height: 100%;
+    background-color: black;
+}
+
+.row.full-page {
+    height: 100%;
+    margin: 0;
 }
 
 .container {
@@ -21,33 +22,42 @@ html,body {
     margin: 20px;
 }
 
-a.link {
-    color: deepskyblue;
-    cursor: pointer;
+li {
+    margin-bottom: 10px;
 }
 
-.navbar, .sidenav {
+.navbar-header, .sidenav {
     padding: 20px;
     background-color: darkblue;
+    border: 5px solid transparent;
+    border-radius: 12px;
 }
 
-.navbar a, .sidenav a {
+.navbar-header a, .sidenav a {
     font-size: 16pt;
     color: red;
     background-color: black;
-    margin-right: 50px;
+}
+.navbar-header a:hover, .navbar-header a:focus,
+.sidenav a:hover, .sidenav a:focus {
+background-color: #eee;
 }
 
-.full-page {
-    height: 100%;
+.navbar-header {
+    width: 100%;
 }
+
+.navbar-header a {
+    margin-right: 50px;    
+}
+
 
 .sidenav {
     align-items: stretch;
     height: 80vh;
 }
 
-input {
+input.text-box {
     color:black;
 }
 

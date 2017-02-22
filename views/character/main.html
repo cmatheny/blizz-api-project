@@ -1,24 +1,22 @@
 <div>
-  <div ng-controller="CharacterCtrl as parent">
-    <div ng-controller="CharacterMainCtrl as char">
-      <div class="container char-main-view">
+  <div ng-controller="CharacterMainCtrl as char">
+    <div class="container char-main-view">
 
-        <div class="row">
-          <input type="text" placeholder="Server" data-ng-model="char.serverInput" ng-keyup="$event.keyCode == 13 ? char.submitRequest(serverInput,nameInput) : null"/>
-          <input type="text" placeholder="Character Name" data-ng-model="char.nameInput" ng-keyup="$event.keyCode == 13 ? char.submitRequest(serverInput,nameInput) : null"/>
-        </div>
+      <div class="row">
+        <input type="text" class="text-box" placeholder="Server" data-ng-model="char.serverInput" ng-keyup="$event.keyCode == 13 ? char.submitRequest(serverInput,nameInput) : null"/>
+        <input type="text" class="text-box" placeholder="Character Name" data-ng-model="char.nameInput" ng-keyup="$event.keyCode == 13 ? char.submitRequest(serverInput,nameInput) : null"/>
+      </div>
 
-        <div class="row">
-          <div data-ng-click="char.submitRequest()" class="btn btn-success">Search!</div>
-        </div>
-        <div class="row">
-          <div data-ng-show='char.data'>
-            <div class="text-center">{{char.data.name}} - {{char.data.realm}}</div>
-            <br/>
-            <div class="text-center"><img alt="Avatar" class="avatar" data-ng-src="{{char.data.thumbnail}}"/></div>
-            <br/>
-            <div class="text-center">Level {{char.data.level}} {{char.data.charRace}} {{char.data.charClass}}</div>
-          </div>
+      <div class="row">
+        <div data-ng-click="char.submitRequest()" class="btn btn-success">Search!</div>
+      </div>
+      <div class="row">
+        <div data-ng-show='char.data'>
+          <div class="text-center">{{char.data.name}} - {{char.data.realm}}</div>
+          <br/>
+          <div class="text-center"><img alt="Avatar" class="avatar" data-ng-src="{{char.data.thumbnail}}"/></div>
+          <br/>
+          <div class="text-center">Level {{char.data.level}} {{char.data.charRace}} {{char.data.charClass}}</div>
         </div>
       </div>
     </div>

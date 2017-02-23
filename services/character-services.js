@@ -1,10 +1,8 @@
-/* global CMGLOBALVAR */
-
-angular.module("routerApp").service("GetCharacterService", function($http,GetApiKeyService,ApiSearchService,$q) {
+angular.module("routerApp").service("GetCharacterService", function($http,GetApiKeyService,ApiSearchService,$q,DaoService) {
 
     var self = this;
-    self.data;
-
+    self.charData = {};
+    
     self.getCharacter = function() {
         return self.charData;
     };
@@ -12,22 +10,76 @@ angular.module("routerApp").service("GetCharacterService", function($http,GetApi
     self.setCharacter = function(charData) {
         self.charData = charData;
     };
-
-    self.getCharacterClassPromise = function() {
-        var deferred = $q.defer();
+    
+    self.getNewCharacter = function(server,name){
+        self.setCharacter(DaoService.getCharacter(server,name));
+        self.charData.$promise.then(function(){
+            self.setCharacterClass();
+            self.setCharacterRace();
+            self.setCharacterThumbnail();
+        },function(){
+            console.log('nupe');
+            self.charData = null;
+        });
         
-        if (self.charData.charClass) {
-            deferred.resolve(self.charData.charClass);
-        } else {
-            self.getClassMapPromise().then(function(){
-                self.charData.charClass = self.characterClassMap[self.charData.class];
-                deferred.resolve(self.charData.charClass);
-            });
-        }
-        
-        return deferred.promise;
+        self.charData.thumbUrl = "resources/loading.gif"; // loading
+        return self.charData;
     };
 
+    self.setCharacterClass = function() {
+
+        if (self.characterClassMap) {
+            self.charData.charClass = self.characterClassMap[self.charData.class];
+        } else {
+            self.getClassMapPromise().then(function(){
+                console.log("class update done");
+                self.setCharacterClass();
+            });
+        }
+    };
+
+    self.setCharacterRace = function() {
+
+        if (self.characterRaceMap) {
+            self.charData.charRace = self.characterRaceMap[self.charData.race];
+        } else {
+            self.getRaceMapPromise().then(function(){
+                console.log("race update done");
+                self.setCharacterRace();
+            });
+        }
+    };
+
+    // TODO: move to DAO and refactor as $resource
+    self.setCharacterThumbnail = function() {
+
+        var deferred = $q.defer();
+
+        var url="https://render-api-us.worldofwarcraft.com/static-render/us/" + self.charData.thumbnail;
+
+        console.log('starting image check');
+
+
+        var tester = new Image();
+
+        tester.onload = function() {
+            console.log("image update done");
+            deferred.resolve();
+        };
+        tester.onerror = function() {
+            url = "resources/image-not-found.png";
+            deferred.resolve();
+        };
+
+        tester.src = url;
+
+        deferred.promise.then(function(){
+            self.charData.thumbUrl = url;
+        });
+
+    };
+
+    // TODO: move to DAO and refactor as $resource
     self.getClassMapPromise = function() {
         var deferred = $q.defer();
         if (self.characterClassMap) {
@@ -49,19 +101,6 @@ angular.module("routerApp").service("GetCharacterService", function($http,GetApi
             });
         }
         console.log(deferred.promise);
-        return deferred.promise;
-    };
-    
-    self.getCharacterRacePromise = function() {
-        var deferred = $q.defer();
-        if (self.charData.charRace) {
-            deferred.resolve(self.charData.charRace);
-        } else {
-            self.getRaceMapPromise().then(function(){
-                self.charData.charRace = self.characterRaceMap[self.charData.race];
-                deferred.resolve(self.charData.charRace);
-            });
-        }
         return deferred.promise;
     };
 
@@ -88,95 +127,4 @@ angular.module("routerApp").service("GetCharacterService", function($http,GetApi
         console.log(deferred.promise);
         return deferred.promise;
     };
-    
-    self.getThumbnailPromise = function() {
-        
-        var deferred = $q.defer();
-        var url="https://render-api-us.worldofwarcraft.com/static-render/us/" + self.charData.thumbnail;
-        
-        console.log('starting image check');
-        
-        function testImage() {
-            var tester = new Image();
-            tester.onload = imageFound;
-            tester.onerror = imageNotFound;
-            tester.src = url;
-            console.log('image object created');
-        }
-
-        function imageFound() {
-            console.log("image found");
-            self.charData.thumbUrl = url;
-            deferred.resolve(self.charData.thumbUrl);
-        }
-        
-        function imageNotFound() {
-            self.charData.thumbUrl = "resources/image-not-found.png";
-            console.log("image not found");
-            deferred.resolve(self.charData.thumbUrl);
-        }
-        
-        testImage();
-        return deferred.promise;
-    };
-
-    self.sendCharacterRequest = function(server, character) {
-        var deferred = $q.defer();
-        
-        $http({
-            method:"GET",
-            url:"https://us.api.battle.net/wow/character/" + server+"/" + character + "?locale=en_US&apikey="+GetApiKeyService.apiKeyCheck()
-        }).then(function(response) {
-            self.charData = response.data;
-            console.log(self.charData);
-            deferred.resolve(self.charData);
-            
-        },function(){
-            alert("Not Found");
-            deferred.resolve();
-        });
-        
-        return deferred.promise;
-    };
 });
-
-angular.module("routerApp").service("ApiSearchService", function($http, GetApiKeyService) {
-
-    var self = this;
-
-    self.sendApiRequest = function(urlStub) {
-        var url = "https://us.api.battle.net/wow/"+urlStub+"?locale=en_US&apikey="+GetApiKeyService.apiKeyCheck();
-        return $http.get(url);
-    };
-});
-
-angular.module("routerApp").service("GetApiKeyService", function() {
-
-    var self = this;
-
-    self.apiKeyPrompt = function(){
-        var input = prompt("Enter API key:");
-        console.log(input);
-        return input;
-
-    };
-
-    self.apiKeyCheck = function() {
-        if (localStorage.apiKey){
-            return localStorage.apiKey;
-        } else {
-            var input = self.apiKeyPrompt();
-            if (input) {
-                localStorage.apiKey = input;
-                return input;
-            } else alert('No API key registered. You will not be able to retrieve from the API.');
-        }
-    };
-});
-
-angular.module("routerApp").service("ClearApiKeyService", function() {
-    var self = this;
-
-    self.clearApiKey = () => localStorage.removeItem('apiKey');
-});
-

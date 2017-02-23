@@ -62,6 +62,15 @@ input.text-box {
     color:black;
 }
 
+div.avatar-slot{
+    height: 200px;
+}
+
 .avatar {
     width: 200px;
+    height: 200px;
+}
+
+#char-search-display {
+    height: 300px;
 }

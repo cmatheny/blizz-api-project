@@ -2,7 +2,7 @@ var CMGLOBALVAR = {
     
 };
 
-var app = angular.module("routerApp", ['ui.router']);
+var app = angular.module("routerApp", ['ui.router','ngResource']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 	
@@ -24,7 +24,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('character',{
 		url: '/character',
         templateUrl: 'views/character.html',
-        controller: 'CharacterCtrl as char',
+        controller: 'CharacterCtrl as char'
 //        views: {
 //            
 //        }
@@ -32,13 +32,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
     
     $stateProvider.state('character.main',{
         url:'/',
-        templateUrl: 'views/character/main.html',
-        controller: 'CharacterMainCtrl as charMain'
+        templateUrl: 'views/character/search.html',
+        controller: 'CharacterMainCtrl as char'
     });
     
     $stateProvider.state('character.stats',{
         url:'/stats',
-        templateUrl: 'views/character/stats.html'
+        templateUrl: 'views/character/stats.html',
+        controller: 'CharacterStatCtrl as stats'
     });
 
     $stateProvider.state('character.talents',{

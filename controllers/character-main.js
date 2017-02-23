@@ -2,39 +2,26 @@ angular.module("routerApp").controller("CharacterMainCtrl", function(GetCharacte
     var self = this;
     self.serverInput="emerald-dream";
     self.nameInput="sarrial";
+    self.data={};
 
+    self.getNewCharacter = function() {
 
-    self.getCharacterClass = function(){
-        GetCharacterService.getCharacterClassPromise().then(function(charClass){
-            self.data.charClass = charClass;
+        GetCharacterService.getNewCharacter(self.serverInput,self.nameInput).$promise.then(null,function(){
+            self.data={};
+            self.data.thumbUrl = "resources/char-not-found.png";
         });
-    };
-
-    self.getCharacterRace = function(){
-        GetCharacterService.getCharacterRacePromise().then(function(charRace){
-            self.data.charRace = charRace;
-        });
-    };
-    
-    self.getThumbnail = function(){
-        GetCharacterService.getThumbnailPromise().then(function(thumbUrl){
-            self.data.thumbUrl = thumbUrl;
-        });
-    };
-
-    self.submitRequest = function() {
-        var promise = GetCharacterService.sendCharacterRequest(self.serverInput, self.nameInput);
-
-        promise.then(function() {
-            self.getCharacter();
-            self.getThumbnail();
-            self.getCharacterClass();
-            self.getCharacterRace();
-        });
+        self.data = GetCharacterService.getCharacter();
     };
 
     self.getCharacter = function() {
+
         self.data = GetCharacterService.getCharacter();
     };    
-    
+
+    self.getCharacter();
+
+    window.printObj = function() {
+        console.log(self.data);
+    };
+
 });

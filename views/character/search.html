@@ -1,0 +1,24 @@
+<div>
+  <div class="container char-main-view">
+    
+    <div class="row">
+      <div id="char-search-display">
+        <div class="text-center" data-ng-cloak>{{char.data.name ? char.data.name + "-" + char.data.realm : "&nbsp;"}}</div>
+        <br/>
+        <div class="text-center avatar-slot" data-ng-show="char.data.thumbUrl"><img alt="Avatar" class="avatar" data-ng-src="{{char.data.thumbUrl}}"/></div>
+        <br/>
+        <div class="text-center " data-ng-show='char.data.level && char.data.charRace && char.data.charClass'>Level {{char.data.level}} {{char.data.charRace}} {{char.data.charClass}}</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <input type="text" class="text-box" placeholder="Server" data-ng-model="char.serverInput" ng-keyup="$event.keyCode == 13 ? char.getNewCharacter() : null"/>
+      <input type="text" class="text-box" placeholder="Character Name" data-ng-model="char.nameInput" ng-keyup="$event.keyCode == 13 ? char.getNewCharacter() : null"/>
+    </div>
+
+    <div class="row">
+      <div data-ng-click="char.getNewCharacter()" class="btn btn-success">Search!</div>
+    </div>
+    
+  </div>
+</div>

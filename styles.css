@@ -13,7 +13,7 @@
     margin: 0;
 }
 
-.container {
+.container.char-main-view {
     margin: 0;
     width: 100%;
 }

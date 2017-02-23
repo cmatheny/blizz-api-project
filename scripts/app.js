@@ -69,7 +69,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('resetKey',{
 		url: '/reset-key',
 		templateUrl: 'views/reset-key.html'
-	});
+	})
+    .state('somethingElse',{
+        url:'/nothing',
+        templateUrl: 'views/something-else.html'
+    });
 	
 	//default routing
 	$urlRouterProvider.otherwise('/index.html');

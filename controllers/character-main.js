@@ -13,7 +13,7 @@ angular.module("routerApp").controller("CharacterMainCtrl", function(CharacterLo
     };
 
     self.getCharacter = function() {
-        self.data = CharacterLogicService.getCharacter();
+       self.data = CharacterLogicService.getCharacter();
     };    
 
     self.getCharacter();

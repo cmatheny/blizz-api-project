@@ -23,7 +23,11 @@ angular.module("routerApp").service("CharacterLogicService", function(ApiSearchS
     self.setCharacter = function(charData) {
         self.charData = charData;
     };
-    
+
+    self.getName = function() {
+        return self.charData.name;
+    };
+
     self.getNewCharacter = function(server,name){
         clearCharacter();
         self.setCharacter(DaoService.getCharacter(server,name));
@@ -37,7 +41,6 @@ angular.module("routerApp").service("CharacterLogicService", function(ApiSearchS
         });
         
         self.charData.thumbUrl = "resources/loading.gif"; // loading
-        return self.charData;
     };
 
     self.setCharacterClass = function() {
@@ -68,6 +71,8 @@ angular.module("routerApp").service("CharacterLogicService", function(ApiSearchS
 
         var deferred = $q.defer();
 
+            //full image url
+//        var url="https://render-us.worldofwarcraft.com/character/emerald-dream/58/47318074-profilemain.jpg"
         var url="https://render-api-us.worldofwarcraft.com/static-render/us/" + self.charData.thumbnail;
 
         console.log('starting image check');

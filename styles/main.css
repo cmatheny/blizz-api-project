@@ -1,0 +1,95 @@
+.container.main {
+    align-self: center;
+    width: 100%;
+    color: white;
+    font-size: 14pt;
+    min-height: 100vh;
+    height: 100%;
+    background-color: black;
+}
+
+.row.full-page {
+    height: 100%;
+    margin: 0;
+}
+
+.container.char-sub-view {
+    margin: 0;
+    width: 100%;
+}
+
+.row {
+    margin: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.navbar-header, .sidenav {
+    background-color: darkblue;
+    border: 5px solid transparent;
+    border-radius: 12px;
+}
+
+a.link {
+    font-size: 12pt;
+    font-weight: bold;
+    color: red;
+    background-color: black;
+    padding:10px;
+    margin:10px;
+}
+
+a.link:hover, a.link:focus {
+background-color: #eee;
+}
+
+.navbar-header {
+    width: 100%;
+    margin: 10px;
+    padding: 5px;
+}
+
+.sidenav {
+    margin-top: 10px;
+    padding: 20px;
+    float: right;
+    display: block;
+}
+
+.title-bar {
+    font-size: 24pt;
+    margin-top: 20px;
+}
+
+input.text-box {
+    color:black;
+}
+
+div.avatar-slot{
+    height: 200px;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+}
+
+/*#char-search-display {
+    height: 300px;
+}*/
+
+#char-header {
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+#char-main-view {
+    padding: 0;
+    padding-right: 15px;
+}
+
+.text-row {
+    height: 26px
+}

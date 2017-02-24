@@ -1,9 +1,7 @@
 angular.module("routerApp").controller("CharacterCtrl", function(CharacterLogicService) {
+
     var self = this;
-    
-    setInterval(function(){
-        self = CharacterLogicService.getCharacter();
-    }, 200);
+    self.service = CharacterLogicService;
     
 });
 

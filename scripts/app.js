@@ -3,7 +3,7 @@ var app = angular.module("routerApp", ['ui.router','ngResource']);
 app.config(function($stateProvider, $urlRouterProvider, $resourceProvider) {
     
     $stateProvider.state('home',{
-		url: '/index.html',
+		url: '/home',
 		templateUrl: 'views/home.html'
 	});
 	
@@ -15,7 +15,7 @@ app.config(function($stateProvider, $urlRouterProvider, $resourceProvider) {
             '':{templateUrl: 'views/character.html'},
             'charheader@character':{
                 templateUrl: 'views/character/char-header.html',
-                controller: 'CharCtrl as header'
+                controller: 'CharacterCtrl as header'
             }
         }
     });
@@ -67,9 +67,6 @@ app.config(function($stateProvider, $urlRouterProvider, $resourceProvider) {
     });
 	
 	//default routing
-	$urlRouterProvider.otherwise('/index.html');
-    
-    //don't strip trailing / in url
-    $resourceProvider.defaults.stripTrailingSlashes = false;
+	$urlRouterProvider.otherwise('/home');
 	
 });

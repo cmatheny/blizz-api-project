@@ -1,7 +1,20 @@
-angular.module("routerApp").service("GetCharacterService", function($http,GetApiKeyService,ApiSearchService,$q,DaoService) {
+angular.module("routerApp").service("CharacterLogicService", function(ApiSearchService,$q,DaoService) {
 
     var self = this;
     self.charData = {};
+    
+    /*
+     * Remove all non-inherited fields from charData object without re-instantiating the object.
+     * This allows the controller to keep the same reference to the service object
+     * when clearing the service object.
+     */
+    var clearCharacter = function() {
+        for (var field in self.charData){
+            if (self.charData.hasOwnProperty(field)){
+                delete self.charData[field];
+            }
+        }
+    };
     
     self.getCharacter = function() {
         return self.charData;
@@ -12,6 +25,7 @@ angular.module("routerApp").service("GetCharacterService", function($http,GetApi
     };
     
     self.getNewCharacter = function(server,name){
+        clearCharacter();
         self.setCharacter(DaoService.getCharacter(server,name));
         self.charData.$promise.then(function(){
             self.setCharacterClass();
@@ -19,7 +33,7 @@ angular.module("routerApp").service("GetCharacterService", function($http,GetApi
             self.setCharacterThumbnail();
         },function(){
             console.log('nupe');
-            self.charData = null;
+            self.charData.thumbUrl = "resources/char-not-found.png";
         });
         
         self.charData.thumbUrl = "resources/loading.gif"; // loading
@@ -50,7 +64,6 @@ angular.module("routerApp").service("GetCharacterService", function($http,GetApi
         }
     };
 
-    // TODO: move to DAO and refactor as $resource
     self.setCharacterThumbnail = function() {
 
         var deferred = $q.defer();
@@ -103,7 +116,8 @@ angular.module("routerApp").service("GetCharacterService", function($http,GetApi
         console.log(deferred.promise);
         return deferred.promise;
     };
-
+    
+    // TODO: move to DAO and refactor as $resource
     self.getRaceMapPromise = function() {
         var deferred = $q.defer();
         if (self.characterRaceMap) {

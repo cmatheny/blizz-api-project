@@ -1,20 +1,23 @@
-angular.module("routerApp").controller("CharacterCtrl", function() {
+angular.module("routerApp").controller("CharacterCtrl", function(CharacterLogicService) {
     var self = this;
+    
+    setInterval(function(){
+        self = CharacterLogicService.getCharacter();
+    }, 200);
+    
 });
 
 angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
     var self = this;
-
-    self.sendRequest = function(urlStub) {
-        var promise = ApiSearchService.sendApiRequest(urlStub);
+    
+    self.sendRequest = function() {
+        var promise = ApiSearchService.sendApiRequest(self.urlStub,self.params);
 
         promise.then(function(response){
         //console.log("success");
         console.log(response);
         console.log(response.data);
         self.data = response.data;
-        self.thumbnail="http://render-api-us.worldofwarcraft.com/static-render/us/" + response.data.thumbnail;
-
 
         }, function(response){
             console.log("failure");
@@ -26,7 +29,7 @@ angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
         
 });
 
-angular.module("routerApp").controller("ResetKeyCtrl", function(ClearApiKeyService) {
+angular.module("routerApp").controller("ResetKeyCtrl", function(ApiKeyService) {
     var self = this;
-    self.resetKey = ClearApiKeyService.clearApiKey;
+    self.resetKey = ApiKeyService.clearApiKey;
 });

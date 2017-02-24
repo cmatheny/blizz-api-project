@@ -3,12 +3,15 @@
     <div class="container main-view">
 
       <div class="row">
-        https://us.api.battle.net/wow/ 
-        <input type="text" class="text-box" placeholder="url-stub" data-ng-model="urlStub" ng-keyup="$event.keyCode == 13 ? api.sendRequest(urlStub) : null"/>
+        <div class="col-xs-3">https://us.api.battle.net/wow/ </div>
+        <input type="text" class="text-box col-xs-4" title="url" placeholder="url-stub" data-ng-model="api.urlStub" ng-keyup="$event.keyCode == 13 ? api.sendRequest() : null"/>
+        <div class="col-xs-1"> ? </div>
+        <input type="text" class="text-box col-xs-4" title="parameters" placeholder="params" data-ng-model="api.params" ng-keyup="$event.keyCode == 13 ? api.sendRequest() : null"/>
+        
       </div>
 
       <div class="row">
-        <div data-ng-click="char.getCharacter(urlStub)" class="btn btn-success">Search!</div>
+        <div data-ng-click="api.sendRequest()" class="btn btn-success">Search!</div>
       </div>
 
     </div>

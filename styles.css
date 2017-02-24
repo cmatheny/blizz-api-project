@@ -13,7 +13,7 @@
     margin: 0;
 }
 
-.container.char-main-view {
+.container.char-sub-view {
     margin: 0;
     width: 100%;
 }
@@ -48,14 +48,17 @@ background-color: #eee;
 
 .navbar-header {
     width: 100%;
+    margin: 10px;
 }
 
 .sidenav {
     min-width: 20%;
+    margin-top: 10px;
 }
 
 .title-bar {
     font-size: 24pt;
+    margin-top: 20px;
 }
 
 input.text-box {
@@ -73,4 +76,15 @@ div.avatar-slot{
 
 #char-search-display {
     height: 300px;
+}
+
+#char-header {
+    width: 98%;
+    margin: 0;
+    margin-top: 10px;
+    margin-right: 15px;
+}
+
+#char-main-view {
+    padding: 0;
 }

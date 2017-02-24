@@ -1,21 +1,19 @@
-angular.module("routerApp").controller("CharacterMainCtrl", function(GetCharacterService) {
+angular.module("routerApp").controller("CharacterMainCtrl", function(CharacterLogicService) {
     var self = this;
     self.serverInput="emerald-dream";
     self.nameInput="sarrial";
     self.data={};
-
+    
+    /*
+     * Sends a call to the CharacterLogic service 
+     */
     self.getNewCharacter = function() {
-
-        GetCharacterService.getNewCharacter(self.serverInput,self.nameInput).$promise.then(null,function(){
-            self.data={};
-            self.data.thumbUrl = "resources/char-not-found.png";
-        });
-        self.data = GetCharacterService.getCharacter();
+        CharacterLogicService.getNewCharacter(self.serverInput,self.nameInput);
+        self.data = CharacterLogicService.getCharacter();
     };
 
     self.getCharacter = function() {
-
-        self.data = GetCharacterService.getCharacter();
+        self.data = CharacterLogicService.getCharacter();
     };    
 
     self.getCharacter();

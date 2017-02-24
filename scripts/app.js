@@ -1,20 +1,6 @@
-var CMGLOBALVAR = {
-    
-};
-
 var app = angular.module("routerApp", ['ui.router','ngResource']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
-	
-    $stateProvider.state('page',{
-        url:'/',
-        templateUrl: 'page.html'
-    });
-    
-    $stateProvider.state('page.main',{
-		url: '/index.html',
-		templateUrl: 'views/home.html'
-	});
+app.config(function($stateProvider, $urlRouterProvider, $resourceProvider) {
     
     $stateProvider.state('home',{
 		url: '/index.html',
@@ -23,11 +9,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	
 	$stateProvider.state('character',{
 		url: '/character',
-        templateUrl: 'views/character.html',
-        controller: 'CharacterCtrl as char'
-//        views: {
-//            
-//        }
+        abstract: 'true',
+        controller: 'CharacterCtrl as char',
+        views: {
+            '':{templateUrl: 'views/character.html'},
+            'charheader@character':{
+                templateUrl: 'views/character/char-header.html',
+                controller: 'CharCtrl as header'
+            }
+        }
     });
     
     $stateProvider.state('character.main',{
@@ -78,5 +68,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	
 	//default routing
 	$urlRouterProvider.otherwise('/index.html');
+    
+    //don't strip trailing / in url
+    $resourceProvider.defaults.stripTrailingSlashes = false;
 	
 });

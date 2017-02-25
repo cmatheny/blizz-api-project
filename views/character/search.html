@@ -1,26 +1,33 @@
 <div>
   <div class="container char-sub-view">
-    
-    <div class="row">
+
+    <div class="row skip-row"></div>
       <div id="char-search-display">
-        <div class="text-center">{{char.getName() ? char.getName() + "-" + char.getRealm() : "&nbsp;"}}</div>
-        <br/>
-        <div class="text-center avatar-slot"><img alt="Avatar" data-ng-show="char.getThumbUrl()" class="avatar" data-ng-src="{{char.getThumbUrl()}}"/></div>
-        <br/>
-        <div class="text-center text-row">
+        <div class="row">
+          <div class="text-center">{{char.getName() ? char.getName() + " - " + char.getRealm() : "&nbsp;"}}</div>
+        </div>
+
+        <div class="row">
+          <div class="text-center avatar-slot"><img alt="Avatar" data-ng-show="char.getThumbUrl()" class="avatar" data-ng-src="{{char.getThumbUrl()}}"/></div>
+        </div>
+
+        <div class="row">
+          <div class="text-center text-row">
           <div data-ng-show='char.getLevel() && char.getRace() && char.getClass()'>Level {{char.getLevel()}} {{char.getRace()}} {{char.getClass()}}</div>
         </div>
+        </div>
       </div>
-    </div>
     
     <div ng-controller="CharacterSearchCtrl as search">
       <div class="row">
-        <input type="text" class="text-box" placeholder="Server" data-ng-model="search.serverInput" ng-keyup="$event.keyCode == 13 ? search.getNewCharacter() : null"/>
-        <input type="text" class="text-box" placeholder="Character Name" data-ng-model="search.nameInput" ng-keyup="$event.keyCode == 13 ? search.getNewCharacter() : null"/>
+        <div class="col-xs-2 col-md-3 col-lg-4"></div>
+        <input type="text" class="col-xs-4 col-md-3 col-lg-2 text-box text-center" placeholder="Server" data-ng-model="search.serverInput" ng-keyup="$event.keyCode == 13 ? search.getNewCharacter() : null"/>
+        <input type="text" class="col-xs-4 col-md-3 col-lg-2 text-box text-center" placeholder="Character Name" data-ng-model="search.nameInput" ng-keyup="$event.keyCode == 13 ? search.getNewCharacter() : null"/>
       </div>
 
       <div class="row">
-        <div data-ng-click="search.getNewCharacter()" class="btn btn-success">Search!</div>
+        <div class="col-xs-5"></div>
+        <div data-ng-click="search.getNewCharacter()" class="btn btn-default col-xs-2">Search!</div>
       </div>
     </div>
     

@@ -10,12 +10,15 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	$stateProvider.state('character',{
 		url: '/character',
         abstract: 'true',
-        controller: 'CharacterCtrl as char',
         views: {
             '':{templateUrl: 'views/character.html'},
             'charheader@character':{
                 templateUrl: 'views/character/char-header.html',
                 controller: 'CharacterCtrl as header'
+            },
+            'sidenav@character': {
+                templateUrl: 'views/character/sidenav.html',
+                controller: 'CharacterCtrl as sidenav'
             }
         }
     });

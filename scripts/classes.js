@@ -10,7 +10,6 @@ angular.module("routerApp").factory("Character", function() {
         self.classId;
         self.race;
         self.raceId;
-        self.guildName;
         self.guild;
         self.faction;
         self.thumbUrl;
@@ -36,7 +35,12 @@ angular.module("routerApp").factory("Character", function() {
         
         self.getRace = () => self.race;
         self.setRace = (raceStr) => self.race = raceStr;
+
+        self.getFaction = () => self.faction;
+        self.setFaction = (factionStr) => self.faction = factionStr;
         
+        self.getGuild = () => self.guild;
+
         self.getThumbUrl = () => self.thumbUrl;
         
         self.setThumbUrl = (thumbUrl) => self.thumbUrl = thumbUrl;
@@ -50,6 +54,7 @@ angular.module("routerApp").factory("Character", function() {
             self.factionId = data.faction;
             if (self.factionId === 0) self.faction = "Alliance";
             else if (self.factionId === 1) self.faction = "Horde";
+            self.guild = data.guild.name;
             console.log(self);
         };
         

@@ -7,7 +7,8 @@ angular.module("routerApp").service("DaoService", function(ApiKeyService,ApiSear
     var getCharacterResource = $resource(baseUrl+"character/:server/:name", { locale: 'en_US', apikey: apiKey });
     
     self.getCharacter = function(server, name) {
-        var resourceObj = getCharacterResource.get({server: server, name: name});
+        var resourceObj = getCharacterResource.get({server: server, name: name, fields: 'guild'});
+        console.log(resourceObj);
         return resourceObj;
     };
     

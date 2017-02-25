@@ -9,7 +9,6 @@ angular.module("routerApp").service("CurrentCharacter", function(CharacterLogicS
     self.character = logic.getCharacter();
     
     self.getCharacter = function(){
-        console.log(self.character);
         return self.character;
     };
     
@@ -19,15 +18,24 @@ angular.module("routerApp").service("CurrentCharacter", function(CharacterLogicS
     
     self.setCharacter = function(server,name){
         logic.getNewCharacter(server,name).then(function(promises){
-            $timeout(function(){
+            if (promises === false) {
+                console.log('false');
                 syncCharacter();
-                $q.all(promises).then(syncCharacter);
-            },100);
+            }
+            else {
+                $timeout(function(){
+                    console.log('true');
+                    // display when everything done loading
+                    $q.all(promises).then(syncCharacter);
+                },1000);
+            }
         });
-        
+        // get loading image
         syncCharacter();
     };
-    
+
+    // grab character on init, if any
+    $timeout(syncCharacter,500);
 });
 
 angular.module("routerApp").service("CharacterLogicService", function($q,DaoService,Character) {
@@ -84,9 +92,11 @@ angular.module("routerApp").service("CharacterLogicService", function($q,DaoServ
             promises.push(self.setCharacterClass());
             promises.push(self.setCharacterRace());
             promises.push(self.setCharacterThumbnail());
+            console.log(request);
             return promises;
         },function(){
             self.character.thumbUrl = "resources/char-not-found.png";
+            return false;
         });
         
         self.character.thumbUrl = "resources/loading.gif"; // loading

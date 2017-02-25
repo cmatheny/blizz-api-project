@@ -4,6 +4,5 @@ angular.module("routerApp").controller("CharacterStatCtrl", function(CurrentChar
     var character = CurrentCharacter.getCharacter;
     
     self.getName = character.getName;
-    
-    console.log(self.getName);
+
 });

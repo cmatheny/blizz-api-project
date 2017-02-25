@@ -11,6 +11,7 @@ angular.module("routerApp").controller("CharacterCtrl", function(CurrentCharacte
     self.getClass = () => character().getClass();
     self.getRace = () => character().getRace();
     self.getFaction = () => character().getFaction();
+    self.getGuild = () => character().getGuild();
     self.getThumbUrl = () => character().getThumbUrl();
     
     

@@ -1,6 +1,16 @@
-<div class="row"><img alt="Avatar" data-ng-show="header.getThumbUrl()" data-ng-src="{{header.getThumbUrl()}}"/></div>
-<div class='col-xs-2'>Name: {{header.getName()}}</div>
-<div class='col-xs-2'>Level: {{header.getLevel()}}</div>
-<div class='col-xs-2'>Race: {{header.getRace()}}</div>
-<div class='col-xs-2'>Class: {{header.getClass()}}</div>
-
+<div class="row">
+  <div class="col-xs-2 thumbnail-sm-slot text-center">
+    <img class="thumbnail-sm" alt="Avatar" data-ng-show="header.getThumbUrl() && header.getName()" data-ng-src="{{header.getThumbUrl()}}"/>
+  </div>
+  <div class="col-xs-10 text-center">
+    <div data-ng-show="header.getName()">
+      <div class="row">
+        <div class="col-xs-6">{{header.getName()}} - {{header.getRealm()}}</div>
+        <div class="col-xs-6">{{header.getLevel()}} {{header.getRace()}} {{header.getClass()}}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">{{header.getGuild()}}</div>
+        <div class="col-xs-6">{{header.getFaction()}}</div>
+      </div>
+  </div>
+</div>

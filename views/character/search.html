@@ -2,22 +2,26 @@
   <div class="container char-sub-view">
 
     <div class="row skip-row"></div>
-      <div id="char-search-display">
-        <div class="row">
-          <div class="text-center">{{char.getName() ? char.getName() + " - " + char.getRealm() : "&nbsp;"}}</div>
-        </div>
 
-        <div class="row">
-          <div class="text-center avatar-slot"><img alt="Avatar" data-ng-show="char.getThumbUrl()" class="avatar" data-ng-src="{{char.getThumbUrl()}}"/></div>
-        </div>
-
-        <div class="row">
-          <div class="text-center text-row">
-          <div data-ng-show='char.getLevel() && char.getRace() && char.getClass()'>Level {{char.getLevel()}} {{char.getRace()}} {{char.getClass()}}</div>
-        </div>
-        </div>
+    <div id="char-search-display">
+      <div class="row">
+        <div class="text-center">{{char.getName() ? char.getName() + " - " + char.getRealm() : "&nbsp;"}}</div>
       </div>
-    
+
+      <div class="row">
+        <div class="text-center avatar-slot"><img alt="Avatar" data-ng-show="char.getThumbUrl()" class="avatar" data-ng-src="{{char.getThumbUrl()}}"/></div>
+      </div>
+
+      <div class="row">
+        <div class="text-center text-row">
+        <div data-ng-show='char.getLevel() && char.getRace() && char.getClass()'>Level {{char.getLevel()}} {{char.getRace()}} {{char.getClass()}}</div>
+      </div>
+      </div>
+    </div>
+
+    <div class="row"></div>
+    <div class="row"></div>
+
     <div ng-controller="CharacterSearchCtrl as search">
       <div class="row">
         <div class="col-xs-2 col-md-3 col-lg-4"></div>
@@ -27,7 +31,7 @@
 
       <div class="row">
         <div class="col-xs-5"></div>
-        <div data-ng-click="search.getNewCharacter()" class="btn btn-default col-xs-2">Search!</div>
+        <div data-ng-click="search.getNewCharacter()" id="search-btn" class="btn btn-default col-xs-2">Search!</div>
       </div>
     </div>
     

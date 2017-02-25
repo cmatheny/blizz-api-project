@@ -2,6 +2,7 @@
     align-self: center;
     width: 100%;
     color: #EEEEEE;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     font-size: 14pt;
     min-height: 100vh;
     height: 100%;
@@ -26,6 +27,11 @@ li {
     margin-bottom: 10px;
 }
 
+#search-btn.btn {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
 .navbar-header, .sidenav, .char-header {
     background-color: #111170;
     /*background-color: #881111;*/
@@ -34,7 +40,7 @@ li {
 }
 
 a.link.btn {
-    font-size: 12pt;
+    font-size: 14pt;
     font-weight: bold;
     background-color: #050505;
     width: 100%;
@@ -54,17 +60,23 @@ background-color: #eee;
 
 .navbar-header a {
     color: #CCCCCC;
+    margin-bottom: 10px;
 }
 
-.sidenav {
+.col-xs-3.sidenav {
     margin-top: 10px;
-    padding: 20px;
+    padding: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     float: right;
     display: block;
+    min-height: 135px;
 }
 
 .sidenav a {
     color: green;
+    height: 50px;
+    line-height: 30px;
 }
 
 .title-bar {

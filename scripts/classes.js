@@ -54,7 +54,8 @@ angular.module("routerApp").factory("Character", function() {
             self.factionId = data.faction;
             if (self.factionId === 0) self.faction = "Alliance";
             else if (self.factionId === 1) self.faction = "Horde";
-            self.guild = data.guild.name;
+            if (data.guild) self.guild = "<" + data.guild.name + ">";
+            else self.guild = "";
             console.log(self);
         };
         

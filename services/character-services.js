@@ -1,7 +1,42 @@
-angular.module("routerApp").service("CharacterLogicService", function(ApiSearchService,$q,DaoService) {
+/*
+ * Intended to be used as a globally available reference to the currently loaded character.
+ */
+angular.module("routerApp").service("CurrentCharacter", function(CharacterLogicService,$timeout,$q) {
+    
+    var self = this;
+    
+    var logic = CharacterLogicService;
+    self.character = logic.getCharacter();
+    
+    self.getCharacter = function(){
+        console.log(self.character);
+        return self.character;
+    };
+    
+    var syncCharacter = function() {
+        self.character = logic.getCharacter();
+    };
+    
+    self.setCharacter = function(server,name){
+        logic.getNewCharacter(server,name).then(function(promises){
+            $timeout(function(){
+                syncCharacter();
+                $q.all(promises).then(syncCharacter);
+            },100);
+        });
+        
+        syncCharacter();
+    };
+    
+});
+
+angular.module("routerApp").service("CharacterLogicService", function($q,DaoService,Character) {
 
     var self = this;
     self.charData = {};
+    
+    self.characters = [];
+    self.character = new Character();
     
     /*
      * Remove all non-inherited fields from charData object without re-instantiating the object.
@@ -17,71 +52,74 @@ angular.module("routerApp").service("CharacterLogicService", function(ApiSearchS
     };
     
     self.getCharacter = function() {
-        return self.charData;
+        return self.character;
     };
-
+    
+    /*
+     * Set fields of character without reassigning a new object to the variable,
+     * so other references to it are not lost.
+     */
     self.setCharacter = function(charData) {
-        self.charData = charData;
+        clearCharacter();
+        Object.keys(charData).forEach(function(key) {
+            self.charData[key] = charData[key];
+          });
     };
-
+    
     self.getName = function() {
         return self.charData.name;
     };
 
     self.getNewCharacter = function(server,name){
+        
         clearCharacter();
-        self.setCharacter(DaoService.getCharacter(server,name));
-        self.charData.$promise.then(function(){
-            self.setCharacterClass();
-            self.setCharacterRace();
-            self.setCharacterThumbnail();
+        self.character = new Character();
+        var request = DaoService.getCharacter(server,name);
+        
+        request.$promise.then(function(){
+            var promises = [];
+            
+            self.character.setFieldsFromData(request);
+            self.setCharacter(request);
+            promises.push(self.setCharacterClass());
+            promises.push(self.setCharacterRace());
+            promises.push(self.setCharacterThumbnail());
+            return promises;
         },function(){
-            console.log('nupe');
-            self.charData.thumbUrl = "resources/char-not-found.png";
+            self.character.thumbUrl = "resources/char-not-found.png";
         });
         
-        self.charData.thumbUrl = "resources/loading.gif"; // loading
+        self.character.thumbUrl = "resources/loading.gif"; // loading
+        
+        return request.$promise;
     };
 
     self.setCharacterClass = function() {
-
-        if (self.characterClassMap) {
-            self.charData.charClass = self.characterClassMap[self.charData.class];
-        } else {
-            self.getClassMapPromise().then(function(){
-                console.log("class update done");
-                self.setCharacterClass();
-            });
-        }
+        var promise = DaoService.getClassMap();
+        promise.then(function(classMap){
+            self.character.class = classMap[self.charData.class];
+        });
+        return promise;
     };
 
     self.setCharacterRace = function() {
-
-        if (self.characterRaceMap) {
-            self.charData.charRace = self.characterRaceMap[self.charData.race];
-        } else {
-            self.getRaceMapPromise().then(function(){
-                console.log("race update done");
-                self.setCharacterRace();
-            });
-        }
+        var promise = DaoService.getRaceMap();
+        promise.then(function(raceMap){
+            self.character.race = raceMap[self.charData.race];
+        });
+        return promise;
     };
 
     self.setCharacterThumbnail = function() {
-
         var deferred = $q.defer();
 
             //full image url
 //        var url="https://render-us.worldofwarcraft.com/character/emerald-dream/58/47318074-profilemain.jpg"
         var url="https://render-api-us.worldofwarcraft.com/static-render/us/" + self.charData.thumbnail;
 
-        console.log('starting image check');
-
-
         var tester = new Image();
 
         tester.onload = function() {
-            console.log("image update done");
             deferred.resolve();
         };
         tester.onerror = function() {
@@ -93,57 +131,8 @@ angular.module("routerApp").service("CharacterLogicService", function(ApiSearchS
 
         deferred.promise.then(function(){
             self.charData.thumbUrl = url;
+            self.character.setThumbUrl(url);
         });
-
-    };
-
-    // TODO: move to DAO and refactor as $resource
-    self.getClassMapPromise = function() {
-        var deferred = $q.defer();
-        if (self.characterClassMap) {
-            deferred.resolve(self.characterClassMap);
-        } else {
-
-            var urlStub = "data/character/classes";
-            var getFromApi = ApiSearchService.sendApiRequest(urlStub);
-            
-            // class definitions start at 1
-            self.characterClassMap = [undefined];
-
-            getFromApi.then(function(response) {
-                console.log(response);
-                for (var index in response.data.classes) {
-                    self.characterClassMap.push(response.data.classes[index].name);
-                }
-                deferred.resolve(self.characterClassMap);
-            });
-        }
-        console.log(deferred.promise);
-        return deferred.promise;
-    };
-    
-    // TODO: move to DAO and refactor as $resource
-    self.getRaceMapPromise = function() {
-        var deferred = $q.defer();
-        if (self.characterRaceMap) {
-            deferred.resolve(self.characterRaceMap);
-        } else {
-
-            var urlStub = "data/character/races";
-            var getFromApi = ApiSearchService.sendApiRequest(urlStub);
-
-            // race definitions start at 1
-            self.characterRaceMap = [undefined];
-
-            getFromApi.then(function(response) {
-                console.log(response);
-                for (var index in response.data.races) {
-                    self.characterRaceMap.push(response.data.races[index].name);
-                }
-                deferred.resolve(self.characterRaceMap);
-            });
-        }
-        console.log(deferred.promise);
         return deferred.promise;
     };
 });

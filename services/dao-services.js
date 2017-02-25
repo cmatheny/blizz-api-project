@@ -1,21 +1,42 @@
-angular.module("routerApp").service("DaoService", function(ApiKeyService,$resource,$q){
+angular.module("routerApp").service("DaoService", function(ApiKeyService,ApiSearchService,$resource,$q){
     
     var self = this;
     var baseUrl = "https://us.api.battle.net/wow/";
     var apiKey = ApiKeyService.apiKeyCheck();
-    console.log("Dao init");
     
     var getCharacterResource = $resource(baseUrl+"character/:server/:name", { locale: 'en_US', apikey: apiKey });
     
     self.getCharacter = function(server, name) {
-        var resourceObj = getCharacterResource.get({server: server, name: name},function() {
-            console.log("done",self.test);
-        });
+        var resourceObj = getCharacterResource.get({server: server, name: name});
         return resourceObj;
     };
     
-    self.getClassMapPromise = function() {
+    self.getRaceMap = function() {
         var deferred = $q.defer();
+        
+        if (self.characterRaceMap) {
+            deferred.resolve(self.characterRaceMap);
+        } else {
+
+            var urlStub = "data/character/races";
+            var getFromApi = ApiSearchService.sendApiRequest(urlStub);
+
+            // race definitions start at 1
+            self.characterRaceMap = [undefined];
+
+            getFromApi.then(function(response) {
+                for (var index in response.data.races) {
+                    self.characterRaceMap.push(response.data.races[index].name);
+                }
+                deferred.resolve(self.characterRaceMap);
+            });
+        }
+        return deferred.promise;
+    };
+    
+    self.getClassMap = function() {
+        var deferred = $q.defer();
+
         if (self.characterClassMap) {
             deferred.resolve(self.characterClassMap);
         } else {
@@ -27,14 +48,12 @@ angular.module("routerApp").service("DaoService", function(ApiKeyService,$resour
             self.characterClassMap = [undefined];
 
             getFromApi.then(function(response) {
-                console.log(response);
                 for (var index in response.data.classes) {
                     self.characterClassMap.push(response.data.classes[index].name);
                 }
                 deferred.resolve(self.characterClassMap);
             });
         }
-        console.log(deferred.promise);
         return deferred.promise;
     };
 });
@@ -44,11 +63,9 @@ angular.module("routerApp").service("ApiSearchService", function($http, ApiKeySe
     var self = this;
 
     self.sendApiRequest = function(urlStub,params) {
-        console.log(params);
         if (params) params += '&';
         else params = '';
         params = "?" + params + "locale=en_US&apikey=" + ApiKeyService.apiKeyCheck();
-        console.log(params);
         var url = "https://us.api.battle.net/wow/"+urlStub+params;
         console.log(url);
         return $http.get(url);

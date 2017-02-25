@@ -3,23 +3,25 @@
     
     <div class="row">
       <div id="char-search-display">
-        <div class="text-center">{{char.data.name ? char.data.name + "-" + char.data.realm : "&nbsp;"}}</div>
+        <div class="text-center">{{char.getName() ? char.getName() + "-" + char.getRealm() : "&nbsp;"}}</div>
         <br/>
-        <div class="text-center avatar-slot"><img alt="Avatar" data-ng-show="char.data.thumbUrl" class="avatar" data-ng-src="{{char.data.thumbUrl}}"/></div>
+        <div class="text-center avatar-slot"><img alt="Avatar" data-ng-show="char.getThumbUrl()" class="avatar" data-ng-src="{{char.getThumbUrl()}}"/></div>
         <br/>
         <div class="text-center text-row">
-          <div data-ng-show='char.data.level && char.data.charRace && char.data.charClass'>Level {{char.data.level}} {{char.data.charRace}} {{char.data.charClass}}</div>
+          <div data-ng-show='char.getLevel() && char.getRace() && char.getClass()'>Level {{char.getLevel()}} {{char.getRace()}} {{char.getClass()}}</div>
         </div>
       </div>
     </div>
+    
+    <div ng-controller="CharacterSearchCtrl as search">
+      <div class="row">
+        <input type="text" class="text-box" placeholder="Server" data-ng-model="search.serverInput" ng-keyup="$event.keyCode == 13 ? search.getNewCharacter() : null"/>
+        <input type="text" class="text-box" placeholder="Character Name" data-ng-model="search.nameInput" ng-keyup="$event.keyCode == 13 ? search.getNewCharacter() : null"/>
+      </div>
 
-    <div class="row">
-      <input type="text" class="text-box" placeholder="Server" data-ng-model="char.serverInput" ng-keyup="$event.keyCode == 13 ? char.getNewCharacter() : null"/>
-      <input type="text" class="text-box" placeholder="Character Name" data-ng-model="char.nameInput" ng-keyup="$event.keyCode == 13 ? char.getNewCharacter() : null"/>
-    </div>
-
-    <div class="row">
-      <div data-ng-click="char.getNewCharacter()" class="btn btn-success">Search!</div>
+      <div class="row">
+        <div data-ng-click="search.getNewCharacter()" class="btn btn-success">Search!</div>
+      </div>
     </div>
     
   </div>

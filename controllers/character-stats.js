@@ -1,6 +1,9 @@
-angular.module("routerApp").controller("CharacterStatCtrl", function(CharacterLogicService) {
+angular.module("routerApp").controller("CharacterStatCtrl", function(CurrentCharacter) {
     var self = this;
 
-    self.charData = CharacterLogicService.getCharacter();
-
+    var character = CurrentCharacter.getCharacter;
+    
+    self.getName = character.getName;
+    
+    console.log(self.getName);
 });

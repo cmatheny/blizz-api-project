@@ -1,6 +1,6 @@
 var app = angular.module("routerApp", ['ui.router','ngResource']);
 
-app.config(function($stateProvider, $urlRouterProvider, $resourceProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     
     $stateProvider.state('home',{
 		url: '/home',
@@ -23,7 +23,7 @@ app.config(function($stateProvider, $urlRouterProvider, $resourceProvider) {
     $stateProvider.state('character.main',{
         url:'/',
         templateUrl: 'views/character/search.html',
-        controller: 'CharacterMainCtrl as char'
+        controller: 'CharacterCtrl as char'
     });
     
     $stateProvider.state('character.stats',{
@@ -69,4 +69,9 @@ app.config(function($stateProvider, $urlRouterProvider, $resourceProvider) {
 	//default routing
 	$urlRouterProvider.otherwise('/home');
 	
+//    //hide # in url
+//    $locationProvider.html5Mode({
+//        enabled:true,
+//        requireBase: false
+//    });
 });

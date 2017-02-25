@@ -1,3 +1,6 @@
-<div>Character Summary</div>
-<div>{{header.service.getName()}}</div>
+<div class="row"><img alt="Avatar" data-ng-show="header.getThumbUrl()" data-ng-src="{{header.getThumbUrl()}}"/></div>
+<div class='col-xs-2'>Name: {{header.getName()}}</div>
+<div class='col-xs-2'>Level: {{header.getLevel()}}</div>
+<div class='col-xs-2'>Race: {{header.getRace()}}</div>
+<div class='col-xs-2'>Class: {{header.getClass()}}</div>
 

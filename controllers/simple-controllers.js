@@ -1,7 +1,18 @@
-angular.module("routerApp").controller("CharacterCtrl", function(CharacterLogicService) {
-
+angular.module("routerApp").controller("CharacterCtrl", function(CurrentCharacter) {
     var self = this;
-    self.service = CharacterLogicService;
+
+    var character = function() {
+        return CurrentCharacter.getCharacter();
+    };
+    
+    self.getName = () => character().getName();
+    self.getRealm = () => character().getRealm();
+    self.getLevel = () => character().getLevel();
+    self.getClass = () => character().getClass();
+    self.getRace = () => character().getRace();
+    self.getFaction = () => character().getFaction();
+    self.getThumbUrl = () => character().getThumbUrl();
+    
     
 });
 

@@ -1,148 +1,147 @@
 /*
  * Intended to be used as a globally available reference to the currently loaded character.
  */
-angular.module("routerApp").service("CurrentCharacter", function(CharacterLogicService,$timeout,$q) {
+angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService', '$timeout', '$q', 'Character', function(CharacterLogicService, $timeout, $q, Character) {
     
     var self = this;
     
     var logic = CharacterLogicService;
-    self.character = logic.getCharacter();
     
+    // Run on service startup. Basically anonymous function but named for debug log.
+    (function init() {
+        
+        //self.characters = [];
+        self.character = new Character();
+
+        // sets from session storage if available
+        try {
+            self.character.setFieldsFromSessionStorage(sessionStorage.character);
+        } catch(e) {
+        }
+    })();
+
     self.getCharacter = function(){
         return self.character;
     };
-    
-    var syncCharacter = function() {
-        self.character = logic.getCharacter();
-    };
-    
+
     self.setCharacter = function(server,name){
+        self.character = new Character();
+        self.character.thumbUrl = "resources/loading.gif"; // loading
         logic.getNewCharacter(server,name).then(function(promises){
             if (promises === false) {
                 console.log('false');
-                syncCharacter();
+                self.character.thumbUrl = "resources/char-not-found.png";
             }
             else {
                 $timeout(function(){
                     console.log('true');
                     // display when everything done loading
-                    $q.all(promises).then(syncCharacter);
-                },1000);
+                    $q.all(promises).then(function(data){
+                        console.log(data);
+                        self.character.setFieldsFromData(data);
+                    });
+                },500);
             }
         });
-        // get loading image
-        syncCharacter();
     };
 
-    // grab character on init, if any
-    $timeout(syncCharacter,500);
-});
+    self.storeCharacter = function() {
+        sessionStorage.character = JSON.stringify(self.character);
+        console.log('stored');
+    };
 
-angular.module("routerApp").service("CharacterLogicService", function($q,DaoService,Character) {
+    self.setStats = function(statsData) {
+        console.log(statsData);
+        self.character.setStatsFromData(statsData);
+    };
+
+    self.requestStats = function() {
+        logic.getStats(self.character).then(self.setStats);
+    };
+
+}]);
+
+angular.module("routerApp").service("CharacterLogicService", ['$q', 'DaoService', 'Character', function($q,DaoService,Character) {
 
     var self = this;
+
     self.charData = {};
-    
-    self.characters = [];
     self.character = new Character();
     
-    /*
-     * Remove all non-inherited fields from charData object without re-instantiating the object.
-     * This allows the controller to keep the same reference to the service object
-     * when clearing the service object.
-     */
-    var clearCharacter = function() {
-        for (var field in self.charData){
-            if (self.charData.hasOwnProperty(field)){
-                delete self.charData[field];
-            }
-        }
-    };
+    
     
     self.getCharacter = function() {
         return self.character;
     };
-    
-    /*
-     * Set fields of character without reassigning a new object to the variable,
-     * so other references to it are not lost.
-     */
-    self.setCharacter = function(charData) {
-        clearCharacter();
-        Object.keys(charData).forEach(function(key) {
-            self.charData[key] = charData[key];
-          });
+
+    self.setCharacter = function(character) {
+        self.character = character;
     };
-    
+
+
+
     self.getName = function() {
-        return self.charData.name;
+        return self.character.name;
     };
 
     self.getNewCharacter = function(server,name){
         
-        clearCharacter();
+        var deferred = $q.defer();
+
         self.character = new Character();
-        var request = DaoService.getCharacter(server,name);
-        
-        request.$promise.then(function(){
+        //self.characters.push(self.character);
+
+        DaoService.getCharacter(server,name).then(function(request){
             var promises = [];
             
             self.character.setFieldsFromData(request);
-            self.setCharacter(request);
-            promises.push(self.setCharacterClass());
-            promises.push(self.setCharacterRace());
-            promises.push(self.setCharacterThumbnail());
+
+            promises.push(self.getCharacterClass(request.class));
+            promises.push(self.getCharacterRace(request.race));
+            promises.push(DaoService.getCharacterImage(request.thumbnail));
             console.log(request);
+            $q.all(promises).then(function(details){
+                request.className = details[0];
+                request.raceName = details[1];
+                request.thumbUrl = details[2];
+                deferred.resolve(request);
+            });
             return promises;
         },function(){
-            self.character.thumbUrl = "resources/char-not-found.png";
-            return false;
+            deferred.resolve(false);
         });
         
-        self.character.thumbUrl = "resources/loading.gif"; // loading
+        return deferred.promise;
+    };
+
+    self.getStats = function(character) {
+        var deferred = $q.defer();
+        DaoService.getCharacter(character.realm, character.name, 'stats').then(function(data){
+            deferred.resolve(data.stats);
+        });
+
+        return deferred.promise;
+    };
+
+    self.getCharacterClass = function(classId) {
         
-        return request.$promise;
-    };
-
-    self.setCharacterClass = function() {
-        var promise = DaoService.getClassMap();
-        promise.then(function(classMap){
-            self.character.class = classMap[self.charData.class];
-        });
-        return promise;
-    };
-
-    self.setCharacterRace = function() {
-        var promise = DaoService.getRaceMap();
-        promise.then(function(raceMap){
-            self.character.race = raceMap[self.charData.race];
-        });
-        return promise;
-    };
-
-    self.setCharacterThumbnail = function() {
         var deferred = $q.defer();
 
-            //full image url
-//        var url="https://render-us.worldofwarcraft.com/character/emerald-dream/58/47318074-profilemain.jpg"
-        var url="https://render-api-us.worldofwarcraft.com/static-render/us/" + self.charData.thumbnail;
+        DaoService.getClassMap().then(function(classMap){
+            deferred.resolve(classMap[classId]);
+        });
 
-        var tester = new Image();
+        return deferred.promise;
+    };
 
-        tester.onload = function() {
-            deferred.resolve();
-        };
-        tester.onerror = function() {
-            url = "resources/image-not-found.png";
-            deferred.resolve();
-        };
+    self.getCharacterRace = function(raceId) {
 
-        tester.src = url;
+        var deferred = $q.defer();
 
-        deferred.promise.then(function(){
-            self.charData.thumbUrl = url;
-            self.character.setThumbUrl(url);
+        DaoService.getRaceMap().then(function(raceMap){
+            deferred.resolve(raceMap[raceId]);
         });
         return deferred.promise;
     };
-});
+
+}]);

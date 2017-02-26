@@ -1,4 +1,4 @@
-angular.module("routerApp").controller("CharacterSearchCtrl", function(CurrentCharacter) {
+angular.module("routerApp").controller("CharacterSearchCtrl", ['CurrentCharacter', function(CurrentCharacter) {
     var self = this;
     self.serverInput="emerald-dream";
     self.nameInput="sarrial";
@@ -7,5 +7,6 @@ angular.module("routerApp").controller("CharacterSearchCtrl", function(CurrentCh
      * Sends a call to the CharacterLogic service 
      */
     self.getNewCharacter = () => CurrentCharacter.setCharacter(self.serverInput,self.nameInput);
-    
-});
+
+}]);
+

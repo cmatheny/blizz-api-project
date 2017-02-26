@@ -1,4 +1,4 @@
-angular.module("routerApp").controller("CharacterCtrl", function(CurrentCharacter) {
+angular.module("routerApp").controller("CharacterCtrl", ['CurrentCharacter', function(CurrentCharacter) {
     var self = this;
 
     var character = function() {
@@ -15,9 +15,9 @@ angular.module("routerApp").controller("CharacterCtrl", function(CurrentCharacte
     self.getThumbUrl = () => character().getThumbUrl();
     
     
-});
+}]);
 
-angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
+angular.module("routerApp").controller("ApiCtrl", ['ApiSearchService', function(ApiSearchService) {
     var self = this;
     
     self.sendRequest = function() {
@@ -37,9 +37,9 @@ angular.module("routerApp").controller("ApiCtrl", function(ApiSearchService) {
 
     };
         
-});
+}]);
 
-angular.module("routerApp").controller("ResetKeyCtrl", function(ApiKeyService) {
+angular.module("routerApp").controller("ResetKeyCtrl", ['ApiKeyService', function(ApiKeyService) {
     var self = this;
     self.resetKey = ApiKeyService.clearApiKey;
-});
+}]);

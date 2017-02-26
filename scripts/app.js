@@ -1,6 +1,6 @@
-var app = angular.module("routerApp", ['ui.router','ngResource']);
+var app = angular.module("routerApp", ['ui.router','ngResource','ui.bootstrap.modal']);
 
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config( ['$stateProvider', '$urlRouterProvider', '$locationProvider' , function($stateProvider, $urlRouterProvider, $locationProvider) {
     
     $stateProvider.state('home',{
 		url: '/home',
@@ -23,7 +23,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         }
     });
     
-    $stateProvider.state('character.main',{
+    $stateProvider.state('character.search',{
         url:'/',
         templateUrl: 'views/character/search.html',
         controller: 'CharacterCtrl as char'
@@ -77,4 +77,4 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 //        enabled:true,
 //        requireBase: false
 //    });
-});
+}]);

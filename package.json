@@ -1,0 +1,28 @@
+{
+  "name": "blizz-api-project",
+  "version": "1.0.0",
+  "description": "WoW character browser and editor",
+  "main": "index.html",
+  "dependencies": {
+    "angular": "1.6.2",
+    "angular-ui-bootstrap": "^2.5.0",
+    "angular-ui-router": "^0.4.2",
+    "bootstrap": "^3.3.7"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmatheny/blizz-api-project.git"
+  },
+  "author": "Chris Matheny",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmatheny/blizz-api-project/issues"
+  },
+  "homepage": "https://github.com/cmatheny/blizz-api-project#readme"
+}

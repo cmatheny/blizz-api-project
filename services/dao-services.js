@@ -1,17 +1,19 @@
-angular.module("routerApp").service("DaoService", function(ApiKeyService,ApiSearchService,$resource,$q){
+angular.module("routerApp").service("DaoService", ['ApiKeyService', 'ApiSearchService', '$resource', '$q', function(ApiKeyService,ApiSearchService,$resource,$q){
     
     var self = this;
     var baseUrl = "https://us.api.battle.net/wow/";
     var apiKey = ApiKeyService.apiKeyCheck();
     
     var getCharacterResource = $resource(baseUrl+"character/:server/:name", { locale: 'en_US', apikey: apiKey });
-    
-    self.getCharacter = function(server, name) {
-        var resourceObj = getCharacterResource.get({server: server, name: name, fields: 'guild'});
+
+    self.getCharacter = function(server, name, field) {
+
+        field = field || 'guild';
+        var resourceObj = getCharacterResource.get({server: server, name: name, fields: field});
         console.log(resourceObj);
-        return resourceObj;
+        return resourceObj.$promise;
     };
-    
+
     self.getRaceMap = function() {
         var deferred = $q.defer();
         
@@ -52,14 +54,42 @@ angular.module("routerApp").service("DaoService", function(ApiKeyService,ApiSear
                 for (var index in response.data.classes) {
                     self.characterClassMap.push(response.data.classes[index].name);
                 }
+                console.log(self.characterClassMap);
                 deferred.resolve(self.characterClassMap);
             });
         }
         return deferred.promise;
     };
-});
 
-angular.module("routerApp").service("ApiSearchService", function($http, ApiKeyService) {
+        self.getCharacterImage = function(thumbnail,full) {
+        var deferred = $q.defer();
+
+        //full image url
+        if (full) {
+            var stub = thumbnail.split('-avatar')[0];
+            var url="https://render-us.worldofwarcraft.com/character/" + stub + "-profilemain.jpg";
+        } else {
+            var url="https://render-api-us.worldofwarcraft.com/static-render/us/" + thumbnail;
+        }
+
+        var tester = new Image();
+
+        tester.onload = function() {
+            deferred.resolve(url);
+        };
+        tester.onerror = function() {
+            url = "resources/image-not-found.png";
+            deferred.resolve(url);
+        };
+
+        tester.src = url;
+
+        return deferred.promise;
+    };
+
+}]);
+
+angular.module("routerApp").service("ApiSearchService", ['$http', 'ApiKeyService', function($http, ApiKeyService) {
 
     var self = this;
 
@@ -71,7 +101,7 @@ angular.module("routerApp").service("ApiSearchService", function($http, ApiKeySe
         console.log(url);
         return $http.get(url);
     };
-});
+}]);
 
 angular.module("routerApp").service("ApiKeyService", function() {
 

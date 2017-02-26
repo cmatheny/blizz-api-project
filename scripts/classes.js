@@ -1,10 +1,25 @@
-angular.module("routerApp").factory("Character", function() {
+angular.module("routerApp").factory("Character", ['FormatService', function(FormatService) {
     var Character = function() {
         
         var self = this;
         
-        self.stats = {};
-        self.talents = {};
+        self.stats = {
+            health: undefined,
+            strength: undefined,
+            agility: undefined,
+            intellect: undefined,
+            stamina: undefined,
+            crit: undefined,
+            critRating: undefined,
+            haste: undefined,
+            hasteRating: undefined,
+            mastery: undefined,
+            masteryRating: undefined,
+            versatility: undefined,
+            versatilityRating: undefined,
+        };
+
+        self.talents = [];
         self.gear = {};
         
         self.getName = () => self.name;
@@ -25,12 +40,16 @@ angular.module("routerApp").factory("Character", function() {
         self.getGuild = () => self.guild;
 
         self.getThumbUrl = () => self.thumbUrl;
-        
         self.setThumbUrl = (thumbUrl) => self.thumbUrl = thumbUrl;
 
         self.getStats = () => self.stats;
         self.getTalents = () => self.talents;
+        self.getGear = () => self.gear;
         
+        self.hasStats = () => !angular.equals(self.stats, {});
+        self.hasTalents = () => !angular.equals(self.talents, []);
+        self.hasGear = () => !angular.equals(self.gear, {});
+
         self.setFieldsFromSessionStorage = function(json) {
             var data = JSON.parse(json);
             console.log(data);
@@ -64,11 +83,25 @@ angular.module("routerApp").factory("Character", function() {
             s.intellect = sData.int;
             s.stamina = sData.sta;
             s.critRating = sData.critRating;
+            s.crit = sData.crit;
             s.hasteRating = sData.hasteRating;
+            s.haste = sData.haste;
             s.masteryRating = sData.masteryRating;
+            s.mastery = sData.mastery;
+            s.versatilityRating = sData.versatility;
+            s.versatility = sData.versatilityDamageDoneBonus;
+            s.versatilityReduction = sData.versatilityDamageTakenBonus;
             console.log(self);
         };
     };
     
     return Character;
+}]);
+
+angular.module("routerApp").factory("Talent", function() {
+    var Talent = function() {
+
+    };
+
+    return new Talent;
 });

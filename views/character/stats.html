@@ -1,10 +1,69 @@
 <div class="container char-main-view">
-  <div>STATS!</div>
   <div class="row">
-    <div data-ng-show='stats.charData'>
-      <div>{{stats.charData.name}}</div>
-      <img alt="Avatar" data-ng-src="{{stats.charData.thumbUrl}}"/>
-      <div>{{stats.charData.charClass}}</div>
+    <div class="text-center" data-ng-show='stats.character.hasStats()'>
+
+      <div class="col-xs-12 col-lg-4">
+        <div class="row sub-title">Primary Stats</div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Health:</div>
+          <div class="col-xs-6 text-left">{{stats.format.shortNumberWithSuffix(stats.cStats.health)}}</div>
+        </div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Stamina:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.stamina)}}</div>
+        </div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Strength:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.strength)}}</div>
+        </div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Agility:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.agility)}}</div>
+        </div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Intellect:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.intellect)}}</div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-lg-4">
+        <div class="row sub-title">Secondary Stats</div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Critical Strike:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.critRating)}} ({{stats.cStats.crit.toFixed(2)}}%)</div>
+        </div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Haste:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.hasteRating)}} ({{stats.cStats.haste.toFixed(2)}}%)</div>
+        </div>
+
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Mastery:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.masteryRating)}} ({{stats.cStats.mastery.toFixed(2)}}%)</div>
+        </div>
+
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Versatility:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.versatilityRating)}} ({{stats.cStats.versatility.toFixed(2)}}%)</div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-lg-4">
+        <div class="row sub-title">Tertiary Stats</div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Leech:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.critRating)}} ({{stats.cStats.crit.toFixed(2)}}%)</div>
+        </div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Avoidance:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.hasteRating)}} ({{stats.cStats.haste.toFixed(2)}}%)</div>
+        </div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Speed:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.masteryRating)}} ({{stats.cStats.mastery.toFixed(2)}}%)</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

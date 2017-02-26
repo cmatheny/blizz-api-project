@@ -1,18 +1,28 @@
-angular.module("routerApp").controller("CharacterStatCtrl", ['CurrentCharacter', '$state', function(CurrentCharacter, $state) {
+angular.module("routerApp").controller("CharacterStatCtrl", ['CurrentCharacter', 'FormatService','$state', function(CurrentCharacter, FormatService, $state) {
     var self = this;
-    self.character = CurrentCharacter.getCharacter();
+    
+    self.format = FormatService;
 
-    if (angular.equals(self.character.getName(), undefined)) {
-        $state.go("character.search");
-        return;
-    }
-
+    var getCharacter = function() {
+        self.character = CurrentCharacter.getCharacter();
+        self.cStats = self.character.stats;
+    };
+    
     (function init() {
-        if (angular.equals(self.character.stats, {})){
-            CurrentCharacter.requestStats();
-            console.log('no stats!');
+        getCharacter();
+
+        if (angular.equals(self.character.getName(), undefined)) {
+            $state.go("character.search");
+            return;
         }
-        else console.log('haz stats!');
+
+        if (!self.character.hasStats()){
+            CurrentCharacter.requestStats().then(getCharacter);
+            console.log('no stats!');
+        } else {
+            console.log('haz stats!');
+        }
+
     })();
 
 }]);

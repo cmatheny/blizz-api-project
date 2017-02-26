@@ -1,8 +1,10 @@
-angular.module("routerApp").service("DaoService", ['ApiKeyService', 'ApiSearchService', '$resource', '$q', function(ApiKeyService,ApiSearchService,$resource,$q){
+angular.module("routerApp").service("CharacterDao", ['ApiKeyService', 'ApiSearchService', '$resource', '$q', function(ApiKeyService,ApiSearchService,$resource,$q){
     
     var self = this;
     var baseUrl = "https://us.api.battle.net/wow/";
     var apiKey = ApiKeyService.apiKeyCheck();
+    self.characterRaceMap = [];
+    self.characterClassMap = [];
     
     var getCharacterResource = $resource(baseUrl+"character/:server/:name", { locale: 'en_US', apikey: apiKey });
 
@@ -17,7 +19,7 @@ angular.module("routerApp").service("DaoService", ['ApiKeyService', 'ApiSearchSe
     self.getRaceMap = function() {
         var deferred = $q.defer();
         
-        if (self.characterRaceMap) {
+        if (!angular.equals(self.characterRaceMap, [])) {
             deferred.resolve(self.characterRaceMap);
         } else {
 
@@ -25,7 +27,7 @@ angular.module("routerApp").service("DaoService", ['ApiKeyService', 'ApiSearchSe
             var getFromApi = ApiSearchService.sendApiRequest(urlStub);
 
             // race definitions start at 1
-            self.characterRaceMap = [undefined];
+            self.characterRaceMap.push(undefined);
 
             getFromApi.then(function(response) {
                 for (var index in response.data.races) {
@@ -40,7 +42,7 @@ angular.module("routerApp").service("DaoService", ['ApiKeyService', 'ApiSearchSe
     self.getClassMap = function() {
         var deferred = $q.defer();
 
-        if (self.characterClassMap) {
+        if (!angular.equals(self.characterClassMap, [])) {
             deferred.resolve(self.characterClassMap);
         } else {
 
@@ -48,7 +50,7 @@ angular.module("routerApp").service("DaoService", ['ApiKeyService', 'ApiSearchSe
             var getFromApi = ApiSearchService.sendApiRequest(urlStub);
             
             // class definitions start at 1
-            self.characterClassMap = [undefined];
+            self.characterClassMap.push(undefined);
 
             getFromApi.then(function(response) {
                 for (var index in response.data.classes) {

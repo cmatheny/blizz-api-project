@@ -6,10 +6,10 @@
     <meta charset="UTF-8">
     
     <title>World of Warcraft Character Viewer</title>
-    <link rel="icon" type="image/png" sizes="96x96" href="./resources/favicon.jpg">
+    <link rel="icon" type="image/png" sizes="96x96" href="./resources/wow-logo.png">
     
     <!-- custom style-sheet(s) -->
-    <link href="styles/main.css" rel="stylesheet" type="text/css"/>
+    <link href="css/main.css" rel="stylesheet" type="text/css"/>
 
     <!-- deployment min/cdn scripts -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -25,11 +25,11 @@
 
     <div class="container main" ng-controller="ColorCtrl as color">
       <div class="row navbar-header title-bar" ng-class="color.getColor()">
-        <div class="col-xs-12">World of Warcraft Character Viewer</div>
+        <div class="col-xs-12"><img id="title-logo" alt="WoW Logo" src="resources/wow-logo.png"/>World of Warcraft Character Viewer</div>
       </div>
       <div class="row navbar-header" ng-class="color.getColor()">
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="home">Home</a></div>
-        <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="character.stats">Character</a></div>
+        <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="character.search">Character</a></div>
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="api">Api Search</a></div>
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="resetKey">Reset API Key</a></div>
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="somethingElse">Something Else</a></div>
@@ -40,6 +40,10 @@
         <data-ui-view></data-ui-view>
       </div>
 
+    </div>
+
+    <div id="loading-icon" ng-controller="CharacterCtrl as loading" ng-class="loading.isLoading()?'':'hidden'">
+      <img alt="loading" src="resources/loading.gif"/>
     </div>
 
     

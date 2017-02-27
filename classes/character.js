@@ -1,14 +1,26 @@
-angular.module("routerApp").factory("Character", ['Stats', 'Talent', function (Stats, Talent) {
+angular.module("routerApp").factory("Character", ['Stats', 'FormatService', function (Stats, FormatService) {
         var Character = function () {
 
             var self = this;
 
             self.stats = new Stats();
-
             self.talents = [];
             self.gear = {};
 
+            self.name;
+            self.nameWithTitle;
+            self.realm;
+            self.level;
+            self.class;
+            self.race;
+            self.faction;
+            self.guild;
+            self.title;
+            self.thumbUrl;
+
             self.getName = () => self.name;
+
+            self.getNameWithTitle = () => self.nameWithTitle;
 
             self.getRealm = () => self.realm;
 
@@ -24,6 +36,8 @@ angular.module("routerApp").factory("Character", ['Stats', 'Talent', function (S
             self.setFaction = (factionStr) => self.faction = factionStr;
 
             self.getGuild = () => self.guild;
+
+            self.getTitle = () => self.title;
 
             self.getThumbUrl = () => self.thumbUrl;
             self.setThumbUrl = (thumbUrl) => self.thumbUrl = thumbUrl;
@@ -48,23 +62,51 @@ angular.module("routerApp").factory("Character", ['Stats', 'Talent', function (S
                 self.name = data.name;
                 self.realm = data.realm;
                 self.level = data.level;
+
                 if (data.className)
                     self.class = data.className;
                 self.classId = data.class;
-                if (data.raceName)
+
+                if (data.raceName) {
                     self.race = data.raceName;
+                }
+
                 self.raceId = data.race;
+
                 self.factionId = data.faction;
-                if (self.factionId === 0)
+
+                if (self.factionId === 0) {
                     self.faction = "Alliance";
-                else if (self.factionId === 1)
+                } else if (self.factionId === 1) {
                     self.faction = "Horde";
-                else if (self.factionId === 2)
+                } else if (self.factionId === 2) {
                     self.faction = "No Faction";
-                if (data.guild)
+                }
+                if (data.guild) {
                     self.guild = "<" + data.guild.name + ">";
-                else
+                } else {
                     self.guild = "";
+                }
+
+                self.title = (function () {
+                    for (var index in data.titles) {
+                        console.log(index);
+                        if (data.titles[index].selected === true) {
+                            return data.titles[index].name;
+                        }
+                    }
+                    return null;
+                })();
+
+                self.nameWithTitle = (function() {
+                    if (!self.title) {
+                        return self.name;
+                    } else {
+                        return FormatService.injectStringToFormat(self.name,self.title);
+                    }
+
+                })();
+
                 if (data.thumbUrl)
                     self.thumbUrl = data.thumbUrl;
                 console.log(self);
@@ -74,6 +116,7 @@ angular.module("routerApp").factory("Character", ['Stats', 'Talent', function (S
                 self.stats.setFieldsFromData(sData);
                 console.log(self);
             };
+
         };
 
         return Character;

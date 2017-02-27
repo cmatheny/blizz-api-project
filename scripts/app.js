@@ -10,15 +10,16 @@ app.config( ['$stateProvider', '$urlRouterProvider', function($stateProvider, $u
 	$stateProvider.state('character',{
 		url: '/character',
         abstract: 'true',
+        
         views: {
-            '':{templateUrl: 'views/character.html'},
+            '':{
+                templateUrl: 'views/character.html',
+                controller: 'CharacterCtrl as char'},
             'charheader@character':{
                 templateUrl: 'views/character/char-header.html',
-                controller: 'CharacterCtrl as header'
             },
             'sidenav@character': {
                 templateUrl: 'views/character/sidenav.html',
-                controller: 'CharacterCtrl as sidenav'
             }
         }
     });
@@ -26,7 +27,7 @@ app.config( ['$stateProvider', '$urlRouterProvider', function($stateProvider, $u
     $stateProvider.state('character.search',{
         url:'/',
         templateUrl: 'views/character/search.html',
-        controller: 'CharacterCtrl as char'
+        controller: 'CharacterSearchCtrl as search'
     });
     
     $stateProvider.state('character.stats',{

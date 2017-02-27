@@ -7,6 +7,8 @@ angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService'
 
         var logic = CharacterLogicService;
 
+        self.loading = false;
+
         // Run on service startup. Basically anonymous function but named for debug log.
         (function init() {
             self.character = new Character();
@@ -23,25 +25,31 @@ angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService'
         };
 
         self.setCharacter = function (server, name) {
+            self.clearStoredCharacter();
             self.character = new Character();
+            self.loading = true;
             self.character.thumbUrl = "resources/loading.gif"; // loading
             logic.getNewCharacter(server, name).then(function (promises) {
-                if (promises === false) {
-                    self.character.thumbUrl = "resources/char-not-found.png";
-                } else {
-                    // display when everything done loading
-                    $q.all(promises).then(function (data) {
-                        self.character.setFieldsFromData(data);
-                        self.storeCharacter();
-                    });
-
-                }
+                // display when everything done loading
+                $q.all(promises).then(function (data) {
+                    self.character.setFieldsFromData(data);
+                    self.storeCharacter();
+                    self.loading = false;
+                });
+            }, function () {
+                self.character.thumbUrl = "resources/char-not-found.png";
+                self.loading = false;
+                self.character.setFaction("No Faction");
+                console.log(self.character);
             });
         };
 
         self.storeCharacter = function () {
             sessionStorage.character = JSON.stringify(self.character);
-            console.log('stored');
+        };
+
+        self.clearStoredCharacter = function() {
+            sessionStorage.removeItem('character');
         };
 
         self.setStats = function (statsData) {
@@ -51,8 +59,13 @@ angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService'
 
         self.requestStats = function () {
 
+            self.loading = true;
+
             var promise = logic.getStats(self.character);
-            promise.then(self.setStats);
+            promise.then(function (statsData) {
+                self.setStats(statsData);
+                self.loading = false;
+            });
 
             return promise;
         };
@@ -77,6 +90,10 @@ angular.module("routerApp").service("CharacterLogicService", ['$q', 'CharacterDa
 
                 self.character.setFieldsFromData(request);
 
+                if (!self.character.getName()) {
+                    deferred.reject();
+                }
+
                 promises.push(getCharacterClass(request.class));
                 promises.push(getCharacterRace(request.race));
                 promises.push(CharacterDao.getCharacterImage(request.thumbnail));
@@ -89,7 +106,7 @@ angular.module("routerApp").service("CharacterLogicService", ['$q', 'CharacterDa
                 });
                 return promises;
             }, function () {
-                deferred.resolve(false);
+                deferred.reject();
             });
 
             return deferred.promise;

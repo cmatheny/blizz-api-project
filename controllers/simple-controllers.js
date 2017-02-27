@@ -1,12 +1,18 @@
 angular.module("routerApp").controller("CharacterCtrl", ['CurrentCharacter', function (CurrentCharacter) {
 
         var self = this;
+        self.isLoading = function(){
+            return CurrentCharacter.loading;
+        };
 
         var character = function () {
             return CurrentCharacter.getCharacter();
         };
 
-        self.getName = () => character().getName();
+        self.getName = () => {
+            self.character = CurrentCharacter.getCharacter();
+            return self.character.name;
+        };
         self.getRealm = () => character().getRealm();
         self.getLevel = () => character().getLevel();
         self.getClass = () => character().getClass();

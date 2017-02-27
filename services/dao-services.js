@@ -12,6 +12,7 @@ angular.module("routerApp").service("CharacterDao", ['ApiKeyService', 'ApiSearch
 
         fields = fields || 'guild,titles';
         var resourceObj = getCharacterResource.get({server: server, name: name, fields: fields});
+        console.log(resourceObj);
         return resourceObj.$promise;
     };
 

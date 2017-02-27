@@ -16,6 +16,24 @@ angular.module("routerApp").service("CharacterDao", ['ApiKeyService', 'ApiSearch
         return resourceObj.$promise;
     };
 
+    self.getStats = function (character) {
+            var deferred = $q.defer();
+            self.getCharacter(character.realm, character.name, 'stats').then(function (data) {
+                deferred.resolve(data.stats);
+            });
+
+            return deferred.promise;
+        };
+
+    self.getFacts = function(character) {
+        var deferred = $q.defer();
+        self.getCharacter(character.realm, character.name, 'statistics').then(function (data) {
+            deferred.resolve(data.statistics);
+        });
+
+        return deferred.promise;
+    };
+
     self.getRaceMap = function() {
         var deferred = $q.defer();
         

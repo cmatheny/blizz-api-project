@@ -6,6 +6,7 @@ angular.module("routerApp").factory("Character", ['Stats', 'FormatService', func
             self.stats = new Stats();
             self.talents = [];
             self.gear = {};
+            self.facts = [];
 
             self.name;
             self.nameWithTitle;
@@ -49,6 +50,7 @@ angular.module("routerApp").factory("Character", ['Stats', 'FormatService', func
             self.hasStats = () => !angular.equals(self.stats.armor, undefined);
             self.hasTalents = () => !angular.equals(self.talents, []);
             self.hasGear = () => !angular.equals(self.gear, {});
+            self.hasFacts = () => !angular.equals(self.facts, []);
 
             self.setFieldsFromSessionStorage = function (json) {
                 var data = JSON.parse(json);
@@ -90,7 +92,6 @@ angular.module("routerApp").factory("Character", ['Stats', 'FormatService', func
 
                 self.title = (function () {
                     for (var index in data.titles) {
-                        console.log(index);
                         if (data.titles[index].selected === true) {
                             return data.titles[index].name;
                         }
@@ -98,11 +99,11 @@ angular.module("routerApp").factory("Character", ['Stats', 'FormatService', func
                     return null;
                 })();
 
-                self.nameWithTitle = (function() {
+                self.nameWithTitle = (function () {
                     if (!self.title) {
                         return self.name;
                     } else {
-                        return FormatService.injectStringToFormat(self.name,self.title);
+                        return FormatService.injectStringToFormat(self.name, self.title);
                     }
 
                 })();
@@ -117,6 +118,45 @@ angular.module("routerApp").factory("Character", ['Stats', 'FormatService', func
                 console.log(self);
             };
 
+            /*
+             * Recursively traverses the statistics object returned from API and sets each
+             * one to an object with a 2-part fact.
+             */
+            self.extractFacts = function (factsData) {
+
+                var factsArray = [];
+                var loopOverCategories = function (category) {
+                    if (category.subCategories !== undefined) {
+                        category.subCategories.forEach(function (subCategory) {
+                            extractCategory(subCategory);
+                            loopOverCategories(subCategory);
+                        });
+                    }
+                };
+
+                var extractCategory = function (category) {
+                    if (category.statistics) {
+                        category.statistics.forEach(function (statistic) {
+                            if (statistic.quantity > 0) {
+                                var answer;
+                                if (statistic.highest) {
+                                    answer = statistic.highest + ' (' + statistic.quantity + ')';
+                                } else {
+                                    answer = statistic.quantity;
+                                }
+                                factsArray.push({
+                                    'name': statistic.name,
+                                    'answer': answer
+                                });
+                            }
+                        });
+                    }
+                };
+
+                loopOverCategories(factsData);
+
+                self.facts = factsArray;
+            };
         };
 
         return Character;

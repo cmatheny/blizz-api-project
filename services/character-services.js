@@ -1,7 +1,7 @@
 /*
  * Intended to be used as a globally available reference to the currently loaded character.
  */
-angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService', '$q', 'Character', function (CharacterLogicService, $q, Character) {
+angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService', '$q', 'Character', 'CharacterDao', function (CharacterLogicService, $q, Character, CharacterDao) {
 
         var self = this;
 
@@ -48,12 +48,17 @@ angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService'
             sessionStorage.character = JSON.stringify(self.character);
         };
 
-        self.clearStoredCharacter = function() {
+        self.clearStoredCharacter = function () {
             sessionStorage.removeItem('character');
         };
 
         self.setStats = function (statsData) {
             self.character.setStatsFromData(statsData);
+            self.storeCharacter();
+        };
+
+        self.setFacts = function (factsData) {
+            self.character.extractFacts(factsData);
             self.storeCharacter();
         };
 
@@ -64,6 +69,19 @@ angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService'
             var promise = logic.getStats(self.character);
             promise.then(function (statsData) {
                 self.setStats(statsData);
+                self.loading = false;
+            });
+            return promise;
+        };
+
+        self.requestFacts = function () {
+
+            self.loading = true;
+
+            var promise = logic.getFacts(self.character);
+            promise.then(function (factsData) {
+                console.log(factsData);
+                self.setFacts(factsData);
                 self.loading = false;
             });
 
@@ -113,12 +131,11 @@ angular.module("routerApp").service("CharacterLogicService", ['$q', 'CharacterDa
         };
 
         self.getStats = function (character) {
-            var deferred = $q.defer();
-            CharacterDao.getCharacter(character.realm, character.name, 'stats').then(function (data) {
-                deferred.resolve(data.stats);
-            });
+            return CharacterDao.getStats(character);
+        };
 
-            return deferred.promise;
+        self.getFacts = function (character) {
+            return CharacterDao.getFacts(character);
         };
 
         var getCharacterClass = function (classId) {

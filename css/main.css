@@ -160,7 +160,7 @@ div.avatar-slot{
     text-decoration: underline;
 }
 
-.row.stat, .row.sub-title {
+.row.stat, .row.sub-title, .row.facts {
     margin: 0px;
     margin-top: 30px;
     margin-bottom: 30px;

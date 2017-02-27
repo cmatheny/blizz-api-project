@@ -41,7 +41,6 @@ angular.module("routerApp").service("CurrentCharacter", ['CharacterLogicService'
 
         self.storeCharacter = function () {
             sessionStorage.character = JSON.stringify(self.character);
-            console.log(JSON.parse(sessionStorage.character));
             console.log('stored');
         };
 

@@ -1,6 +1,6 @@
-var app = angular.module("routerApp", ['ui.router','ngResource','ui.bootstrap.modal']);
+var app = angular.module("routerApp", ['ui.router','ngResource','ui.bootstrap']);
 
-app.config( ['$stateProvider', '$urlRouterProvider', '$locationProvider' , function($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config( ['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     
     $stateProvider.state('home',{
 		url: '/home',

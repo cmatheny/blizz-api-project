@@ -10,38 +10,30 @@
     
     <!-- custom style-sheet(s) -->
     <link href="styles/main.css" rel="stylesheet" type="text/css"/>
-    
-    <!-- development full/local styles/scripts -->
-<!--    <link href="dependencies/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <script src="dependencies/angular.js" type="text/javascript"></script>
-    <script src="dependencies/angular-ui-router.js" type="text/javascript"></script>
-    <script src="dependencies/ui-bootstrap-tpls.js" type="text/javascript"></script>-->
 
-    
-    
     <!-- deployment min/cdn scripts -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
-    <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-resource.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.2/angular-resource.min.js" type="text/javascript"></script>
     
   </head>
   
   <body>
 
-    <div class="container main">
-      <div class="row navbar-header title-bar">
+    <div class="container main" ng-controller="ColorCtrl as color">
+      <div class="row navbar-header title-bar" ng-class="color.getColor()">
         <div class="col-xs-12">World of Warcraft Character Viewer</div>
       </div>
-      <div class="row navbar-header">
+      <div class="row navbar-header" ng-class="color.getColor()">
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="home">Home</a></div>
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="character.stats">Character</a></div>
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="api">Api Search</a></div>
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="resetKey">Reset API Key</a></div>
         <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="somethingElse">Something Else</a></div>
-        <div class="col-xs-4 col-lg-2"><a class="link btn" data-ui-sref="somethingElse">Nothing</a></div>
+        <div class="col-xs-4 col-lg-2"><a class="link btn">Nothing</a></div>
       </div>
       
       <div class="row full-page">
@@ -64,7 +56,12 @@
     <script src="services/format-service.js" type="text/javascript"></script>
     
     <!-- Classes (factories) -->
-    <script src="scripts/classes.js" type="text/javascript"></script>
+    <script src="classes/character.js" type="text/javascript"></script>
+    <script src="classes/talent.js" type="text/javascript"></script>
+    <script src="classes/stats.js" type="text/javascript"></script>
+
+    <!--Other Directives-->
+
     
   </body>
   

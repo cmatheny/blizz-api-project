@@ -33,10 +33,20 @@ li {
 }
 
 .navbar-header, .sidenav, .char-header {
-    background-color: #111170;
-    /*background-color: #881111;*/
     border: 5px solid transparent;
     border-radius: 12px;
+}
+
+.navbar-header.neutral, .sidenav.neutral, .char-header.neutral {
+    background-color: #333333;
+}
+
+.navbar-header.red, .sidenav.red, .char-header.red {
+    background-color: #660505;
+}
+
+.navbar-header.blue, .sidenav.blue, .char-header.blue {
+    background-color: #111170;
 }
 
 a.link.btn {
@@ -49,7 +59,7 @@ a.link.btn {
 }
 
 a.link:hover, a.link:focus {
-background-color: #eee;
+    background-color: #eee;
 }
 
 .navbar-header, .char-header {
@@ -139,20 +149,23 @@ div.avatar-slot{
     margin: 0;
 }
 
-.sub-title {
-    font-size: 16pt;
-    text-decoration: underline;
-    background: black;
-}
-
 .row.spacer {
     margin-top: 30px;
 }
 
-.row.stat {
+.row.sub-title {
+    font-size: 16pt;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.row.stat, .row.sub-title {
     margin: 0px;
     margin-top: 30px;
     margin-bottom: 30px;
-    cursor: help;
     background: black;
+}
+
+.row.stat {
+    cursor: help;
 }

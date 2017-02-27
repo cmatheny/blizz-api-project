@@ -1,9 +1,9 @@
-<div class="container char-main-view">
+<div class="char-main-view">
   <div class="row">
     <div class="text-center" data-ng-show='stats.character.hasStats()'>
 
       <div class="col-xs-12 col-lg-4">
-        <div class="row sub-title">Primary Stats</div>
+        <div class="row sub-title">Primary</div>
         <div class="row stat">
           <div class="col-xs-6 text-right">Health:</div>
           <div class="col-xs-6 text-left">{{stats.format.shortNumberWithSuffix(stats.cStats.health)}}</div>
@@ -27,7 +27,7 @@
       </div>
 
       <div class="col-xs-12 col-lg-4">
-        <div class="row sub-title">Secondary Stats</div>
+        <div class="row sub-title">Secondary</div>
         <div class="row stat">
           <div class="col-xs-6 text-right">Critical Strike:</div>
           <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.critRating)}} ({{stats.cStats.crit.toFixed(2)}}%)</div>
@@ -49,21 +49,33 @@
       </div>
 
       <div class="col-xs-12 col-lg-4">
-        <div class="row sub-title">Tertiary Stats</div>
+        <div class="row sub-title">Defensive</div>
         <div class="row stat">
-          <div class="col-xs-6 text-right">Leech:</div>
-          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.critRating)}} ({{stats.cStats.crit.toFixed(2)}}%)</div>
+          <div class="col-xs-6 text-right">Armor:</div>
+          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.armor)}}</div>
         </div>
         <div class="row stat">
-          <div class="col-xs-6 text-right">Avoidance:</div>
-          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.hasteRating)}} ({{stats.cStats.haste.toFixed(2)}}%)</div>
+          <div class="col-xs-6 text-right">Block:</div>
+          <div class="col-xs-6 text-left">{{stats.cStats.block.toFixed(2)}}%</div>
         </div>
         <div class="row stat">
-          <div class="col-xs-6 text-right">Speed:</div>
-          <div class="col-xs-6 text-left">{{stats.format.commafy(stats.cStats.masteryRating)}} ({{stats.cStats.mastery.toFixed(2)}}%)</div>
+          <div class="col-xs-6 text-right">Dodge:</div>
+          <div class="col-xs-6 text-left">{{stats.cStats.dodge.toFixed(2)}}%</div>
+        </div>
+        <div class="row stat">
+          <div class="col-xs-6 text-right">Parry:</div>
+          <div class="col-xs-6 text-left">{{stats.cStats.parry.toFixed(2)}}%</div>
         </div>
       </div>
 
     </div>
+  </div>
+  <div ng-controller="MainCtrl">
+    <button type="button" class="btn btn-default"
+            data-toggle="tooltip"
+            tooltip="Tooltip on left"
+            tooltip-placement="left" >
+           Tooltip on left
+    </button>
   </div>
 </div>

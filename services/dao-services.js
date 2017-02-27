@@ -8,11 +8,10 @@ angular.module("routerApp").service("CharacterDao", ['ApiKeyService', 'ApiSearch
     
     var getCharacterResource = $resource(baseUrl+"character/:server/:name", { locale: 'en_US', apikey: apiKey });
 
-    self.getCharacter = function(server, name, field) {
+    self.getCharacter = function(server, name, fields) {
 
-        field = field || 'guild';
-        var resourceObj = getCharacterResource.get({server: server, name: name, fields: field});
-        console.log(resourceObj);
+        fields = fields || 'guild,titles';
+        var resourceObj = getCharacterResource.get({server: server, name: name, fields: fields});
         return resourceObj.$promise;
     };
 
@@ -26,12 +25,9 @@ angular.module("routerApp").service("CharacterDao", ['ApiKeyService', 'ApiSearch
             var urlStub = "data/character/races";
             var getFromApi = ApiSearchService.sendApiRequest(urlStub);
 
-            // race definitions start at 1
-            self.characterRaceMap.push(undefined);
-
             getFromApi.then(function(response) {
                 for (var index in response.data.races) {
-                    self.characterRaceMap.push(response.data.races[index].name);
+                    self.characterRaceMap[response.data.races[index].id] = response.data.races[index].name;
                 }
                 deferred.resolve(self.characterRaceMap);
             });
@@ -56,7 +52,6 @@ angular.module("routerApp").service("CharacterDao", ['ApiKeyService', 'ApiSearch
                 for (var index in response.data.classes) {
                     self.characterClassMap.push(response.data.classes[index].name);
                 }
-                console.log(self.characterClassMap);
                 deferred.resolve(self.characterClassMap);
             });
         }

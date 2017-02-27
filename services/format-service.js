@@ -27,7 +27,8 @@ angular.module("routerApp").service("FormatService", function () {
      * Inject commas into a number, returning a string (Integer only)
      */
     self.commafy = function(number) {
-        if (!number) return null;
+        if (number === undefined) return null;
+        if (number === 0) return 0;
         var numStr = number.toString();
         var newStr = "";
         var counter;

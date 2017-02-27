@@ -1,5 +1,7 @@
 angular.module("routerApp").controller("CharacterSearchCtrl", ['CurrentCharacter', function(CurrentCharacter) {
     var self = this;
+
+    // defaults for faster testing
     self.serverInput="emerald-dream";
     self.nameInput="sarrial";
     

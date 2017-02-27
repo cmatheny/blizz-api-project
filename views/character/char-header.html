@@ -5,12 +5,13 @@
   <div class="col-xs-10 text-center">
     <div data-ng-show="header.getName()">
       <div class="row">
-        <div class="col-xs-6">{{header.getName()}} - {{header.getRealm()}}</div>
+        <div class="col-xs-6">{{header.getName()}} - Title</div>
         <div class="col-xs-6">{{header.getLevel()}} {{header.getRace()}} {{header.getClass()}}</div>
       </div>
       <div class="row">
-        <div class="col-xs-6">{{header.getGuild()}}</div>
-        <div class="col-xs-6">{{header.getFaction()}}</div>
+        <div class="col-xs-6">{{header.getGuild() || "No Guild"}}</div>
+        <div class="col-xs-6">{{header.getRealm()}} - {{header.getFaction()}}</div>
       </div>
+    </div>
   </div>
 </div>

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-2 thumbnail-sm-slot text-center">
+    <img class="thumbnail-sm" alt="Avatar" data-ng-show="char.character.thumbUrl && char.character.name" data-ng-src="{{char.character.thumbUrl}}"/>
+  </div>
+  <div class="col-xs-10 text-center">
+    <div data-ng-show="char.getName()">
+      <div class="row">
+        <div class="col-xs-6">{{char.character.nameWithTitle}}</div>
+        <div class="col-xs-6">{{char.character.level}} {{char.character.race}} {{char.character.class}}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">{{char.character.guild || "No Guild"}}</div>
+        <div class="col-xs-6">{{char.character.realm}} - {{char.character.faction}}</div>
+      </div>
+    </div>
+  </div>
+</div>

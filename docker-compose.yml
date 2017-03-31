@@ -1,0 +1,29 @@
+version: '3'
+services:
+    db:
+        image: mongo:3.4.2
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongodata:/data/db
+    simc-build:
+        build: api/simc/build
+        volumes:
+            - simc-repo:/simc-repo
+            - simc-release:/simc-release
+    simc:
+        build: api/simc
+        depends_on:
+            - simc-build
+        volumes:
+            - simc-release:/simc-release
+    api:
+        build: api/main
+        ports:
+            - "5000:5000"
+        depends_on:
+            - db
+volumes:
+    mongodata:
+    simc-repo:
+    simc-release:

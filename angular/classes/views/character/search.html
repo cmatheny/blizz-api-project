@@ -1,0 +1,38 @@
+<div>
+  <div class="char-sub-view">
+
+    <div class="row skip-row"></div>
+
+    <div id="char-search-display">
+      <div class="row">
+        <div class="text-center">{{char.getName() ? char.character.name + " - " + char.character.realm : "&nbsp;"}}</div>
+      </div>
+
+      <div class="row">
+        <div class="text-center avatar-slot"><img alt="Avatar" data-ng-show="char.character.thumbUrl" class="avatar" data-ng-src="{{char.character.thumbUrl}}"/></div>
+      </div>
+
+      <div class="row">
+        <div class="text-center text-row">
+          <div data-ng-show='char.character.level && char.character.race && char.character.class'>Level {{char.character.level}} {{char.character.race}} {{char.character.class}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row"></div>
+    <div class="row"></div>
+
+    <div class="row">
+      <div class="col-xs-2 col-md-3 col-lg-4"></div>
+      <input type="text" class="col-xs-4 col-md-3 col-lg-2 text-box text-center" placeholder="Server" data-ng-model="search.serverInput" ng-keyup="$event.keyCode === 13 ? search.getNewCharacter() : null"/>
+      <input type="text" class="col-xs-4 col-md-3 col-lg-2 text-box text-center" placeholder="Character Name" data-ng-model="search.nameInput" ng-keyup="$event.keyCode === 13 ? search.getNewCharacter() : null"/>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-5"></div>
+      <div data-ng-click="search.getNewCharacter()" id="search-btn" class="btn btn-default col-xs-2">Search!</div>
+    </div>
+
+
+  </div>
+</div>

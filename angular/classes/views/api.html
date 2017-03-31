@@ -1,0 +1,21 @@
+<div>
+  <div ng-controller="ApiCtrl as api">
+    <div class="container main-view">
+
+      <div class="row"></div>
+      
+      <div class="row">
+        <div class="col-xs-6 col-lg-3 text-right">https://us.api.battle.net/wow/ </div>
+        <input type="text" class="text-box col-xs-6 col-lg-4" title="url" placeholder="url-stub" data-ng-model="api.urlStub" ng-keyup="$event.keyCode == 13 ? api.sendRequest() : null"/>
+        <div class="col-xs-6 col-lg-1 text-right"> ? </div>
+        <input type="text" class="text-box col-xs-6 col-lg-4" title="parameters" placeholder="params" data-ng-model="api.params" ng-keyup="$event.keyCode == 13 ? api.sendRequest() : null"/>
+        
+      </div>
+
+      <div class="row">
+        <div data-ng-click="api.sendRequest()" class="btn btn-success">Search!</div>
+      </div>
+
+    </div>
+  </div>
+</div>

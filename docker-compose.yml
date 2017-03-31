@@ -6,17 +6,11 @@ services:
             - "27017:27017"
         volumes:
             - mongodata:/data/db
-    simc-build:
-        build: api/simc/build
-        volumes:
-            - simc-repo:/simc-repo
-            - simc-release:/simc-release
     simc:
+        image: cmatheny/simc:latest
         build: api/simc
-        depends_on:
-            - simc-build
-        volumes:
-            - simc-release:/simc-release
+        environment:
+            APIKEY:  ${APIKEY}
     api:
         build: api/main
         ports:
@@ -25,5 +19,3 @@ services:
             - db
 volumes:
     mongodata:
-    simc-repo:
-    simc-release:

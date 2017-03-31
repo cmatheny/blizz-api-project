@@ -1,9 +1,28 @@
-FROM blizzapiproject_simc-build
+FROM alpine:3.5
+RUN mkdir /simc-repo /simc
+RUN apk update && \
+    apk add \
+        ca-certificates \
+        curl \
+        g++ \
+        libssl1.0 \
+        libstdc++ \
+        make \
+        openssl-dev \
+        && \
+    curl -L https://api.github.com/repos/simulationcraft/simc/tarball | \
+        tar xzpv -C /simc-repo --strip 1 && \
+    make -C /simc-repo/engine OPENSSL=1 optimized && \
+    mv /simc-repo/engine/simc /simc && \
+    rm -rf /simc-repo && \
+    apk del \
+        ca-certificates \
+        curl \
+        g++ \
+        make \
+        openssl-dev \
+        && \
+    rm -rf /var/cache/apk/*
+
 RUN mkdir -p /simc/results /simc/profiles
-RUN echo pvg5en7c6k54jrkq2ftsy67cfjcuyyc4 > ~/.simc_apikey
-RUN echo '#!/bin/bash' > '/simc/simc.sh'; \
-	echo 'echo $1' >> '/simc/simc.sh'; \
-	echo '/simc-release/simc armory=us,emerald-dream,$1 html=/simc/results/$1.html' >> '/simc/simc.sh'; \
-	ls -l /simc;
-RUN chmod 755 /simc/simc.sh
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "/simc/simc" ]

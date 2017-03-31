@@ -1,7 +1,0 @@
-#!/bin/bash
-export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
-cd /simc-repo
-git pull || git clone https://github.com/simulationcraft/simc.git /simc-repo
-#make -C /simc-repo/engine OPENSSL=1 optimized
-mv /simc-repo/engine/simc /simc-release/simc
-ls -l /simc-release /simc-repo /simc-repo/engine

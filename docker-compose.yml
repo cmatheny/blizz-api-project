@@ -16,7 +16,7 @@ services:
         image: cmatheny/simc-api:latest
         build: api/simc-api
         ports:
-            - "5000:5000"
+            - "15000:5000"
         environment:
             APIKEY:  ${APIKEY}
     api:
@@ -26,5 +26,6 @@ services:
             - "5000:5000"
         depends_on:
             - db
+            - simc-api
 volumes:
     mongodata:

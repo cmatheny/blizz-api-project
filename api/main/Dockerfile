@@ -1,12 +1,14 @@
-FROM ubuntu:16.04
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends python-pip && \
-    pip install --upgrade pip && \
-    pip install -U setuptools && \
-    pip install eve && \
-    apt-get remove -y python-pip && \
-    rm -rf /var/lib/apt/lists/*
+FROM alpine:3.5
 
-COPY scripts /python
+RUN apk add --no-cache python3
+RUN pip3 install -U pip
+RUN pip3 install -U \
+    eve \
+    setuptools
+
 EXPOSE 5000
-CMD python /python/run.py
+
+RUN mkdir /app
+COPY scripts /app
+
+ENTRYPOINT [ "python3", "/app/run.py" ]

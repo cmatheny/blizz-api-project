@@ -2,7 +2,7 @@
   "name": "blizz-api-project",
   "version": "1.0.0",
   "description": "WoW character browser and editor",
-  "main": "index.html",
+  "main": "index.js",
   "dependencies": {
     "angular": "1.6.2",
     "angular-ui-bootstrap": "^2.5.0",

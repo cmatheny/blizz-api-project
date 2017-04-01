@@ -24,5 +24,6 @@ RUN apk update && \
         && \
     rm -rf /var/cache/apk/*
 
+ENV PATH /simc:$PATH
 RUN mkdir -p /simc/results /simc/profiles
-ENTRYPOINT [ "/simc/simc" ]
+ENTRYPOINT [ "/bin/sh" ]

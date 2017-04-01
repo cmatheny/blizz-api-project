@@ -4,11 +4,16 @@ run: build
 run-i: build
 	docker-compose up api
 
+run-simc:
+	docker-compose stop -t 0 simc-api
+	docker-compose build simc-api
+	docker-compose up simc-api
+
 build:
 	docker-compose stop -t 0 api
 	docker-compose build api
     
-build-a:
+build-all:
 	docker-compose stop -t 0
 	docker-compose build
 
@@ -24,11 +29,6 @@ logs-all:
 down:
 	docker-compose down
 
-reset-db: down
-    docker volume rm blizzapiproject_mongodata
-
 uninstall: down
-	reset-db
-    docker volume rm blizzapiproject_simc-repo
-    docker volume rm blizzapiproject_simc-build
+	docker-compose down -v
 

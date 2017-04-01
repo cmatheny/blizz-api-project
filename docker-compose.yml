@@ -1,7 +1,7 @@
 version: '3'
 services:
     db:
-        image: mongo:3.4.2
+        image: mvertes/alpine-mongo:latest
         ports:
             - "27017:27017"
         volumes:
@@ -9,9 +9,18 @@ services:
     simc:
         image: cmatheny/simc:latest
         build: api/simc
+        entrypoint: [ "/bin/sh" ]
+        environment:
+            APIKEY:  ${APIKEY}
+    simc-api:
+        image: cmatheny/simc-api:latest
+        build: api/simc-api
+        ports:
+            - "5000:5000"
         environment:
             APIKEY:  ${APIKEY}
     api:
+        image: cmatheny/wow-char-sim-api
         build: api/main
         ports:
             - "5000:5000"

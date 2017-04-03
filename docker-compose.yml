@@ -19,6 +19,13 @@ services:
             - "15000:5000"
         environment:
             APIKEY:  ${APIKEY}
+    simc-api-t:
+        image: cmatheny/simc-api-t:latest
+        build: api/simc-api-t
+        ports:
+            - "15001:8888"
+        environment:
+            APIKEY:  ${APIKEY}
     api:
         image: cmatheny/wow-char-sim-api
         build: api/main

@@ -1,3 +1,5 @@
+import sys
+
 SERVER_NAME = None
 
 MONGO_HOST = None
@@ -14,3 +16,12 @@ MAX_SIM_THREADS = 2
 DEFAULT_QUEUE_CHECK_INTERVAL = 2
 DEFAULT_THREAD_CHECK_INTERVAL = .2
 DEFAULT_REGION = "us"
+
+CONTROLLER_MODULES = [
+    'controllers'
+]
+
+# Logger config
+DEFAULT_STDOUT = sys.stdout
+LOG_INCLUDE = [ "warn", "log", "error" ]
+LOG_TIMESTAMP = True

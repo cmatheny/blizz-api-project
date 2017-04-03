@@ -1,20 +1,22 @@
-run: run-q
-	docker-compose logs -f &
+run: logs-all
+	make run-q
+	make logs-all
 
-run-q: build
+run-q: build-all
 	docker-compose up -d api
 	
-run-simc: run-simc-q
-	docker-compose logs -f &
+run-simc: run-simc-q logs-all
 
 run-simc-q:
-	docker-compose stop simc-api
-	docker-compose build simc-api
-	docker-compose up -d simc-api
+	docker-compose stop simc-api-t
+	docker-compose build simc-api-t
+	docker-compose up -d simc-api-t
 
 build:
 	docker-compose stop api
+	docker-compose stop simc-api-t
 	docker-compose build api
+	docker-compose build simc-api-t
     
 build-all:
 	docker-compose stop
@@ -27,7 +29,10 @@ logs-db:
 	docker-compose logs -f db
 
 logs-all:
-	docker-compose logs -f
+	docker-compose logs -f &
+    
+logs-full:
+	docker-compose logs -f -t &
 
 down:
 	docker-compose down

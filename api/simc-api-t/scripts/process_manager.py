@@ -95,6 +95,7 @@ class ProcessThread(threading.Thread):
         self.completed_jobs = 0
         self.status = "Initialized"
         self.is_running = False
+        self._stop = threading.Event()
 
     def run(self):
         print("Starting Simulation Thread " + str(self.threadID), file = sys.stderr)
@@ -121,6 +122,9 @@ class ProcessThread(threading.Thread):
                 self.status = "Idle"
         
         self.status = "Stopped"
+    
+    def stop(self):
+        self._stop.set()
         
     def __str__(self):
         return ('{"threadID": ' + self.threadID + ', "status": ' + self.status 

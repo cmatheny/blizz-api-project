@@ -1,14 +1,21 @@
 import handlers
+import importlib
+import logger
+import module_scanner
 import os
 import services
+import settings as settings
 import sys
 import tornado.ioloop
 import tornado.web
 
-def make_app():
-    return tornado.web.Application([
-        (r"/", MainHandler),
-    ])
+def make_app(settings_file = "settings"):
+    settings = importlib.import_module(settings_file)
+    handlers = module_scanner.generate_handlers(settings.CONTROLLER_MODULES)
+    logger.log(handlers)
+    app = tornado.web.Application(handlers)
+    app.listen(settings.SERVER_PORT)
+    return app
 
 '''
 @app.route('/queue', methods=['GET'])
@@ -32,11 +39,9 @@ def test_endpoint_post():
 if __name__ == '__main__':
     with open("/root/.simc_apikey", "w") as f: 
         f.write(os.environ['APIKEY'])
-
-    service = services.SimcService()
-
-    app = make_app()
-    app.listen(8888)
-
-    tornado.ioloop.IOLoop.current().start()
     
+    #service = services.SimcService()
+    
+    app = make_app()
+    logger.log(app.handlers)
+    tornado.ioloop.IOLoop.current().start()

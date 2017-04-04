@@ -1,18 +1,19 @@
 import json
+import logger
 import tornado.web
+from handlers import RequestMapping
 
-class RequestMapping():
-    mappings=[]
-        
-    def __call__(controller, url):
-        mappings.append(url)
-        return contrpller
-        
 @RequestMapping(url = r"/")
-class MainHandler(tornado.web.RequestHandler):
-    url = "r/"
+class MainHandler:
+    #url = "r/"
     def get(self):
-        self.write("Hello, world")
+        print("Hello, world")
+
+@RequestMapping(url = r"/simulate")
+class SimulationHandler:
+    def get(self):
+        print("Do a simulation")
+
 
 '''        
 mappings.append(r"/simulate", SimulateHandler)

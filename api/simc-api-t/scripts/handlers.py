@@ -1,26 +1,15 @@
 import json
 import tornado.web
 
-class RequestMapping():
-    mappings=[]
-        
-    def __call__(controller, url):
-        mappings.append(url)
-        
-@RequestMapping(url = r"/")
-class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.write("Hello, world")
-
-'''        
-mappings.append(r"/simulate", SimulateHandler)
-class SimulateHandler(tornado.web.RequestHandler):
-    def post(self):
-            request_json = flask.request.get_json(force=True)
-        print(request_json, file=sys.stderr)
-        results_json = service.simc_armory_to_json(request_json)
-        return return_json(results_json)
-        
-def stringify(json_dict):
-    return json.dumps(json_dict, sort_keys=True, indent=2)
-   ''' 
+class RequestMapping:
+    
+    def __init__(self, url):
+        print(url)
+        self.url = url
+        #self.handler["mapping"] = url
+    
+    def __call__(self, controller):
+        class MappedHandler(controller, tornado.web.RequestHandler):
+            url =  self.url
+        print(MappedHandler)
+        return MappedHandler

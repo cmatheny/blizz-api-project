@@ -1,15 +1,17 @@
 import json
+import logger
 import tornado.web
 
 class RequestMapping:
     
-    def __init__(self, url):
-        print(url)
-        self.url = url
-        #self.handler["mapping"] = url
+    def __init__(self, *args, **kwargs):
+        self.url = kwargs["url"]
+        
+        logger.debug("args: ", args)
+        logger.debug("kwargs: ", kwargs)
     
     def __call__(self, controller):
-        class MappedHandler(controller, tornado.web.RequestHandler):
-            url =  self.url
-        print(MappedHandler)
-        return MappedHandler
+        mapped_controller = type(controller.__name__,
+                (controller, tornado.web.RequestHandler), {"url": self.url})
+        
+        return mapped_controller

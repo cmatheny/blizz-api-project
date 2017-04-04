@@ -5,7 +5,6 @@ from handlers import RequestMapping
 
 @RequestMapping(url = r"/")
 class MainHandler:
-    #url = "r/"
     def get(self):
         logger.log("Hello, world")
         self.write("HI")

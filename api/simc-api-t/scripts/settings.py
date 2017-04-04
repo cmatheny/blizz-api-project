@@ -9,10 +9,16 @@ DEFAULT_THREAD_CHECK_INTERVAL = .2
 DEFAULT_REGION = "us"
 
 CONTROLLER_MODULES = [
-    'controllers'
+    'rest_controllers',
+    'socket_controllers',
 ]
 
 # Logger config
-DEFAULT_STDOUT = sys.stdout
-LOG_INCLUDE = [ "warn", "log", "error" ]
-LOG_TIMESTAMP = True
+logger_settings = {
+    "DEFAULT_DEBUG": sys.stdout,
+    "DEFAULT_LOG": sys.stdout,
+    "DEFAULT_ERR": sys.stderr,
+    "DEFAULT_WARN": sys.stderr,
+    "LOG_INCLUDE": [ "debug", "log", "err", "warn" ],
+    "LOG_TIMESTAMP": True,
+}

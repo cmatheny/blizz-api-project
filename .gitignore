@@ -1,3 +1,5 @@
 node_modules/**
 /nbproject/
 /nbproject/private/
+.spyproject/
+api/**/__pycache__/

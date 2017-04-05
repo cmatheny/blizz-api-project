@@ -6,18 +6,18 @@ run-q: build-all
 	docker-compose up -d api
 	
 run-simc: run-simc-q
-	docker-compose logs -f simc-api-t &
+	docker-compose logs -f simc-api &
 
 run-simc-q:
-	docker-compose stop simc-api-t
-	docker-compose build simc-api-t
-	docker-compose up -d simc-api-t
+	docker-compose stop simc-api
+	docker-compose build simc-api
+	docker-compose up -d simc-api
 
 build:
 	docker-compose stop api
-	docker-compose stop simc-api-t
+	docker-compose stop simc-api
 	docker-compose build api
-	docker-compose build simc-api-t
+	docker-compose build simc-api
     
 build-all:
 	docker-compose stop

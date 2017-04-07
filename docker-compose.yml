@@ -16,7 +16,7 @@ services:
         image: cmatheny/simc-api:latest
         build: api/simc-api
         ports:
-            - "15001:8888"
+            - "28888:28888"
         environment:
             APIKEY:  ${APIKEY}
     api:

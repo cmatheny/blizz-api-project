@@ -1,2 +1,0 @@
-class ProcessFailureException(Exception):
-    pass

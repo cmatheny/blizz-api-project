@@ -1,0 +1,3 @@
+[submodule "api/simc-api"]
+	path = api/simc-api
+	url = https://github.com/cmatheny/simc-api.git

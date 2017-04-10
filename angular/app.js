@@ -57,6 +57,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             templateUrl: 'angular/views/character/editor.html'
         });
 
+        $stateProvider.state('simulate', {
+                url: '/simulate',
+                templateUrl: 'angular/views/simulate/main.html',
+                controller: 'SimulateMainCtrl as sim'
+        });
+        
         $stateProvider.state('api', {
             url: '/apiSearch',
             templateUrl: 'angular/views/api.html'
@@ -65,11 +71,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         $stateProvider.state('resetKey', {
             url: '/reset-key',
             templateUrl: 'angular/views/reset-key.html'
-        })
-            .state('somethingElse', {
+        });
+        
+        $stateProvider.state('somethingElse', {
                 url: '/nothing',
                 templateUrl: 'angular/views/something-else.html'
-            });
+        });
 
         //default routing
         $urlRouterProvider.otherwise('/');

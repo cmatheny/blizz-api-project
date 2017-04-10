@@ -1,0 +1,22 @@
+<div>
+  <div class="char-sub-view">
+
+    <div class="row skip-row"></div>
+
+    <div class="row"></div>
+    <div class="row"></div>
+
+    <div class="row">
+      <div class="col-xs-2 col-md-3 col-lg-4"></div>
+      <input type="text" class="col-xs-4 col-md-3 col-lg-2 text-box text-center" placeholder="Server" data-ng-model="sim.realmInput" ng-keyup="$event.keyCode === 13 ? sim.submitSimulation() : null"/>
+      <input type="text" class="col-xs-4 col-md-3 col-lg-2 text-box text-center" placeholder="Character Name" data-ng-model="sim.nameInput" ng-keyup="$event.keyCode === 13 ? sim.submitSimulation() : null"/>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-5"></div>
+      <div data-ng-click="sim.submitSimulation()" id="search-btn" class="btn btn-default col-xs-2">Simulate!</div>
+    </div>
+
+
+  </div>
+</div>

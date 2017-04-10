@@ -145,3 +145,43 @@ angular.module("routerApp").service("ApiKeyService", function() {
     self.clearApiKey = () => localStorage.removeItem('apiKey');
     
 });
+
+angular.module("routerApp").service("SimcApi", function() {
+
+    var self = this;
+    
+    self.connect = function() {
+        var socket = new WebSocket("ws://localhost:28888/async");
+        socket.onmessage = function (evt) {
+            try {var msg = JSON.parse(evt.data); }
+            catch (SyntaxError) {var msg = evt.data;}
+            console.log(msg);
+        };
+        socket.submitSimulation = function(realm, name) {
+            console.log(realm,name);
+            this.send(JSON.stringify(["simulate",
+                    {
+                        "realm": realm,
+                        "name" : name
+                    }]));
+        };
+        return socket;
+    };
+    
+    class SimcSocket extends WebSocket {
+                
+        onmessage(evt) {
+            console.log(evt);
+        }
+        
+        submitSimulation(realm, name) {
+            console.log(realm,name);
+            this.send(JSON.stringify(["simulate",
+                    {
+                        "realm": realm,
+                        "name" : name
+                    }]));
+        }
+    };
+    
+});

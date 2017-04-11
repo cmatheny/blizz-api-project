@@ -189,3 +189,15 @@ div.avatar-slot{
     width: 45px;
     margin-right: 30px;
 }
+
+.output-log {
+    font-size: 10pt;
+    overflow-y: scroll;
+    height: 500px;
+    background: black;
+    white-space: pre-wrap;
+}
+
+ul {
+    list-style: none;
+}

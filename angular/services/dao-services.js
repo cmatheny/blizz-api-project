@@ -157,31 +157,11 @@ angular.module("routerApp").service("SimcApi", function() {
             catch (SyntaxError) {var msg = evt.data;}
             console.log(msg);
         };
-        socket.submitSimulation = function(realm, name) {
-            console.log(realm,name);
-            this.send(JSON.stringify(["simulate",
-                    {
-                        "realm": realm,
-                        "name" : name
-                    }]));
-        };
         return socket;
     };
+
+    self.socket = self.connect();
     
-    class SimcSocket extends WebSocket {
-                
-        onmessage(evt) {
-            console.log(evt);
-        }
-        
-        submitSimulation(realm, name) {
-            console.log(realm,name);
-            this.send(JSON.stringify(["simulate",
-                    {
-                        "realm": realm,
-                        "name" : name
-                    }]));
-        }
-    };
-    
+    self.getSocket = () => self.socket;
+
 });

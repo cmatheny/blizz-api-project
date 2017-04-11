@@ -16,7 +16,8 @@
       <div class="col-xs-5"></div>
       <div data-ng-click="sim.submitSimulation()" id="search-btn" class="btn btn-default col-xs-2">Simulate!</div>
     </div>
-
-
+    <ul class="output-log">
+      <li data-ng-repeat="line in sim.getJobs()[0].output track by $index">{{ line }}</li>
+    </ul>
   </div>
 </div>

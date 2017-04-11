@@ -23,8 +23,7 @@ angular.module("routerApp").service("SimcService", ['SimcApi', '$timeout', funct
                     data.message = ' ';
                 }
                 console.log(data.message);
-                self.jobs[0].output.push(data.message);
-                // console.log(data);
+                self.jobs[data.job_id].output.push(data.message);
             },
             
             error(data) {

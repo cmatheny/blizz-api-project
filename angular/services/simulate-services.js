@@ -26,6 +26,10 @@ angular.module("routerApp").service("SimcService", ['SimcApi', '$timeout', funct
                 self.jobs[0].output.push(data.message);
                 // console.log(data);
             },
+            
+            error(data) {
+                throw "WebSocket Error: " + data.message;
+            },
 
             message(data) {
                 console.log(data);
@@ -33,34 +37,14 @@ angular.module("routerApp").service("SimcService", ['SimcApi', '$timeout', funct
 
             result(data) {
                 console.log(data);
-                console.log(typeof(self.jobs[0].output[5]));
-            },
-
-            job_cancelled(data) {
-                var job_index = self.jobs.indexOf(data.job_id);
-                self.jobs[job_index].status = "Cancelled";
             },
             
-            job_completed(data) {
-                var job_index = self.jobs.indexOf(data.job_id);
-                self.jobs[job_index].status = "Completed";
-            },
-
-            job_failed(data) {
-                var job_index = self.jobs.indexOf(data.job_id);
-                self.jobs[job_index].status = "Failed";
-            },
-
-            job_queued(data) {
-                self.jobs.push(new Job(data.job_id, "Queued"));
-            },
-
-            job_started(data) {
+            status(data) {
                 var job_index = self.jobs.indexOf(data.job_id);
                 if (job_index === -1) {
-                    self.jobs.push(new Job(data.job_id, "Running"));
+                    self.jobs.push(new Job(data.job_id, data.status));
                 } else {
-                    self.jobs[job_index].status = "Running";
+                    self.jobs[job_index].status = data.status;
                 }
             }
         };

@@ -192,12 +192,23 @@ div.avatar-slot{
 
 .output-log {
     font-size: 10pt;
+    font-family: monospace;
     overflow-y: scroll;
-    height: 500px;
+    height: 350px;
     background: black;
     white-space: pre-wrap;
 }
 
 ul {
     list-style: none;
+}
+
+.sim-info {
+    font-size: 12pt;
+    padding-left: 20px;
+}
+
+.tab {
+    border: 2px solid white;
+    padding: 0;
 }

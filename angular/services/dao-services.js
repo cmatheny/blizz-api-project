@@ -124,9 +124,9 @@ angular.module("routerApp").service("ApiKeyService", function() {
     var self = this;
 
     self.apiKeyPrompt = function(){
-        var input = prompt("Enter API key:");
-        console.log(input);
-        return input;
+//        var input = prompt("Enter API key:");
+//        console.log(input);
+//        return input;
 
     };
 
@@ -138,7 +138,7 @@ angular.module("routerApp").service("ApiKeyService", function() {
             if (input) {
                 localStorage.apiKey = input;
                 return input;
-            } else alert('No API key registered. You will not be able to retrieve from the API.');
+            } // else alert('No API key registered. You will not be able to retrieve from the API.');
         }
     };
     
@@ -151,7 +151,8 @@ angular.module("routerApp").service("SimcApi", function() {
     var self = this;
     
     self.connect = function() {
-        var socket = new WebSocket("ws://localhost:28888/simulate");
+        var socket = new WebSocket("ws://ec2-54-193-56-240.us-west-1.compute.amazonaws.com:28888/simulate");
+        // var socket = new WebSocket("ws://localhost:28888/simulate");
         socket.onmessage = function (evt) {
             try {var msg = JSON.parse(evt.data); }
             catch (SyntaxError) {var msg = evt.data;}

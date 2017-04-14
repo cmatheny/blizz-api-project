@@ -151,7 +151,7 @@ angular.module("routerApp").service("SimcApi", function() {
     var self = this;
     
     self.connect = function() {
-        var socket = new WebSocket("ws://ec2-54-193-56-240.us-west-1.compute.amazonaws.com:28888/simulate");
+        var socket = new WebSocket("wss://ec2-54-193-56-240.us-west-1.compute.amazonaws.com:28888/simulate");
         // var socket = new WebSocket("ws://localhost:28888/simulate");
         socket.onmessage = function (evt) {
             try {var msg = JSON.parse(evt.data); }

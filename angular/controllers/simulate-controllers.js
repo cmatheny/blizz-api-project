@@ -50,6 +50,11 @@ angular.module("routerApp").controller("SimulateMainCtrl", ['SimcService', funct
         console.log(self.job_ids, " ", job_id_index);
     };
     
+    self.tabIsSelected = function(job_id) {
+        console.log(self.current_job.job_id === job_id);
+        return self.current_job.job_id === job_id;
+    };
+    
     self.getJobs();
     simc.registerCallback(self.update);
 }]);

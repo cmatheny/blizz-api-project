@@ -124,9 +124,9 @@ angular.module("routerApp").service("ApiKeyService", function() {
     var self = this;
 
     self.apiKeyPrompt = function(){
-        var input = prompt("Enter API key:");
-        console.log(input);
-        return input;
+//        var input = prompt("Enter API key:");
+//        console.log(input);
+//        return input;
 
     };
 
@@ -138,7 +138,7 @@ angular.module("routerApp").service("ApiKeyService", function() {
             if (input) {
                 localStorage.apiKey = input;
                 return input;
-            } else alert('No API key registered. You will not be able to retrieve from the API.');
+            } // else alert('No API key registered. You will not be able to retrieve from the API.');
         }
     };
     

@@ -56,6 +56,16 @@ angular.module("routerApp").service("SimcService", ['SimcApi', '$timeout', funct
                 throw TypeError;
             }
         };
+        
+        self.cancelJob = function(job_id) {
+            delete self.jobs[job_id];
+            self.socket.send(JSON.stringify({
+                method: "cancel",
+                data: {
+                    job_id: job_id
+                }
+            }));
+        };
 
         self.submitArmorySimulation = function(realm, name) {
             self.socket.send(JSON.stringify(

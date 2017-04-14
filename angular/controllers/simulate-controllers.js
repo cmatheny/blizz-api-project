@@ -17,18 +17,24 @@ angular.module("routerApp").controller("SimulateMainCtrl", ['SimcService', funct
             self.setCurrentJob(self.job_ids[0]);
         }
     };
-    self.setCurrentJob = function(job_number) {
-        self.current_job = self.jobs[job_number];
+    self.setCurrentJob = function(job_id) {
+        self.current_job = self.jobs[job_id];
         console.log(self.current_job);
     };
     
-    self.removeJob = function(index) {
-        if (self.current_job.job_id === index) {
+    self.removeJob = function(job_id) {
+        if (self.current_job.job_id === job_id) {
             var update_view = true;
         }
+        
+        if (self.current_job.status === "Queued" ||
+                self.current_job.status === "Running") {
+            simc.cancelJob(job_id);
+        }
+        
         console.log(self.jobs);
-        delete self.jobs[index];
-        var job_id_index = self.job_ids.indexOf(index);
+
+        var job_id_index = self.job_ids.indexOf(job_id);
         self.job_ids.splice(job_id_index, 1);
         console.log(simc.jobs);
         

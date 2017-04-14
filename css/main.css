@@ -212,3 +212,13 @@ ul {
     border: 2px solid white;
     padding: 0;
 }
+
+div.tab:hover {
+    background-color: white;
+    color: black;
+}
+    
+.tab.selected {
+    color: black;
+    background-color: #999999;
+}

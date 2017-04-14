@@ -4,6 +4,7 @@ angular.module("routerApp").service("SimcService", ['SimcApi', '$timeout', funct
         
         self.socket = simcApi.getSocket();
         self.jobs = [];
+        self.job_ids = [];
 
         var Job = function(job_id, status) {
             this.job_id = job_id;
@@ -12,19 +13,17 @@ angular.module("routerApp").service("SimcService", ['SimcApi', '$timeout', funct
             return this;
         };
 
-        self.jobs.push(new Job(0, "Running"));
-
         var socketMethods = {
 
             output(data) {
-//                var job_index = self.jobs.indexOf(data.job_id);
-//                self.jobs[job_index].output.push(data.message);
                 if (data.message==='') {
                     data.message = ' ';
                 }
-                console.log(data.message);
-                self.jobs[0].output.push(data.message);
-                // console.log(data);
+                self.jobs[data.job_id].output.push(data.message);
+            },
+            
+            error(data) {
+                throw "WebSocket Error: " + data.data;
             },
 
             message(data) {
@@ -33,62 +32,50 @@ angular.module("routerApp").service("SimcService", ['SimcApi', '$timeout', funct
 
             result(data) {
                 console.log(data);
-                console.log(typeof(self.jobs[0].output[5]));
-            },
-
-            job_cancelled(data) {
-                var job_index = self.jobs.indexOf(data.job_id);
-                self.jobs[job_index].status = "Cancelled";
             },
             
-            job_completed(data) {
-                var job_index = self.jobs.indexOf(data.job_id);
-                self.jobs[job_index].status = "Completed";
-            },
-
-            job_failed(data) {
-                var job_index = self.jobs.indexOf(data.job_id);
-                self.jobs[job_index].status = "Failed";
-            },
-
-            job_queued(data) {
-                self.jobs.push(new Job(data.job_id, "Queued"));
-            },
-
-            job_started(data) {
-                var job_index = self.jobs.indexOf(data.job_id);
-                if (job_index === -1) {
-                    self.jobs.push(new Job(data.job_id, "Running"));
+            status(data) {
+                console.log(data);
+                if (self.jobs[data.job_id] === undefined) {
+                    self.jobs[data.job_id] = new Job(data.job_id, data.status);
+                    self.job_ids.push(data.job_id);
                 } else {
-                    self.jobs[job_index].status = "Running";
+                    self.jobs[data.job_id].status = data.status;
                 }
             }
         };
 
         self.socket.onmessage = function(evt) {
             var message = JSON.parse(evt.data);
-            var method = message[0];
-            var data = message[1];
             try {
-                socketMethods[method](data);
-//                self.callback();
-                $timeout(angular.noop);
+                socketMethods[message.method](message.data);
+                $timeout(self.callback,0);
             } catch (TypeError) {
-                console.log(message);
-                TypeError.message = "Method '" + method + "' not implemented";
+                console.log(TypeError);
+                TypeError.message = "Method '" + message.method + "' not implemented";
                 throw TypeError;
             }
+        };
+        
+        self.cancelJob = function(job_id) {
+            delete self.jobs[job_id];
+            self.socket.send(JSON.stringify({
+                method: "cancel",
+                data: {
+                    job_id: job_id
+                }
+            }));
         };
 
         self.submitArmorySimulation = function(realm, name) {
             self.socket.send(JSON.stringify(
-                [
-                    "simulate",
-                    {
+                {
+                    "method": "simulate",
+                    "data": {
                         "realm": realm,
                         "name" : name
                     }
-                ]
+                }
             ));
         };
 

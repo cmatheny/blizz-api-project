@@ -21,7 +21,7 @@ build:
     
 build-all:
 	docker-compose stop
-	docker-compose build
+	docker-compose build --no-cache
 
 logs:
 	docker-compose logs -f api
